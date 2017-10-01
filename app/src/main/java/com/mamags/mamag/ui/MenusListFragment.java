@@ -1,6 +1,7 @@
 package com.mamags.mamag.ui;
 
 import android.content.Context;
+import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -16,6 +17,7 @@ import com.mamags.mamag.BaseFragment;
 import com.mamags.mamag.BaseViewModel;
 import com.mamags.mamag.R;
 import com.mamags.mamag.api.RestAPI;
+import com.mamags.mamag.databinding.FragmentMenuListBinding;
 import com.mamags.mamag.model.Menu;
 import com.mamags.mamag.viewmodel.IView;
 import com.mamags.mamag.viewmodel.MenuView;
@@ -24,6 +26,7 @@ import com.mamags.mamag.viewmodel.MenuViewModel;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
 /**
  * <p>A fragment that shows a list of items as a modal bottom sheet.</p>
@@ -34,7 +37,7 @@ import javax.inject.Inject;
  * <p>You activity (or fragment) needs to implement {@link MenusListFragment.Listener}.</p>
  */
 
-public class MenusListFragment extends BaseFragment<ViewDataBinding,MenuViewModel> implements MenuView {
+public class MenusListFragment extends BaseFragment<FragmentMenuListBinding,MenuViewModel> implements MenuView {
 
     // TODO: Customize parameter argument names
     private static final String ARG_ITEM_COUNT = "item_count";
@@ -57,6 +60,7 @@ public class MenusListFragment extends BaseFragment<ViewDataBinding,MenuViewMode
         super.onCreate(savedInstanceState);
 
         //attach the view model interface object
+        restAPI = (RestAPI)getActivity();
         viewModel = new MenuViewModel(ctx.getApplication(),restAPI );
         viewModel.attach(this);
 
@@ -66,11 +70,8 @@ public class MenusListFragment extends BaseFragment<ViewDataBinding,MenuViewMode
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-       bindView(R.layout.fragment_menu_list);
-
-        return binding.getRoot();
-
-        //return inflater.inflate(R.layout.fragment_menu_list, container, false);
+       bindView(inflater,R.layout.fragment_menu_list,container);
+       return binding.getRoot();
     }
 
     @Override

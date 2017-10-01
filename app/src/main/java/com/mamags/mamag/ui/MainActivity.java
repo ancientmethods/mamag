@@ -11,8 +11,14 @@ import android.widget.TextView;
 import com.mamags.mamag.BaseActivity;
 import com.mamags.mamag.BaseViewModel;
 import com.mamags.mamag.R;
+import com.mamags.mamag.api.RestAPI;
+import com.mamags.mamag.model.Menu;
 import com.mamags.mamag.viewmodel.IView;
 import com.mamags.mamag.viewmodel.MenuViewModel;
+
+import java.util.List;
+
+import io.reactivex.Flowable;
 
 public class MainActivity extends BaseActivity<ViewDataBinding,BaseViewModel> implements IView{
 
@@ -56,7 +62,6 @@ public class MainActivity extends BaseActivity<ViewDataBinding,BaseViewModel> im
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
     }
-
 
 
 

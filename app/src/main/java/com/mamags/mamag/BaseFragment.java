@@ -5,6 +5,8 @@ import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.view.LayoutInflater;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.mamags.mamag.viewmodel.IView;
@@ -23,11 +25,13 @@ public abstract class BaseFragment<B extends ViewDataBinding, T extends BaseView
      * ViewModel must be initialized before bindView() is called
      * @param layout layout for the activity
      */
-    protected final void bindView(int layout) {
+    protected final void bindView(LayoutInflater inflater, int layout, ViewGroup container) {
         if (viewModel == null) {
             throw new IllegalStateException("viewModel must not be null and should be injected via activityComponent().inject(this)");
         }
-        binding = DataBindingUtil.setContentView(ctx, layout);
+        binding = DataBindingUtil.inflate(
+                inflater, layout, container, false);
+
     }
 
 
@@ -56,6 +60,6 @@ public abstract class BaseFragment<B extends ViewDataBinding, T extends BaseView
     }
 
     @Override public void error(String message) {
-        Toast.makeText(ctx, "Error", Toast.LENGTH_LONG).show();
+        Toast.makeText(ctx, "error", Toast.LENGTH_LONG).show();
     }
 }
