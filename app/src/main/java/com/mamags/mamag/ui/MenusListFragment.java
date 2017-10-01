@@ -23,6 +23,8 @@ import com.mamags.mamag.viewmodel.MenuViewModel;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 /**
  * <p>A fragment that shows a list of items as a modal bottom sheet.</p>
  * <p>You can show this modal bottom sheet from your activity like this:</p>
@@ -38,6 +40,9 @@ public class MenusListFragment extends BaseFragment<ViewDataBinding,MenuViewMode
     private static final String ARG_ITEM_COUNT = "item_count";
     RecyclerView recyclerView;
 
+    @Inject
+    RestAPI restAPI;
+
     // TODO: Customize parameters
     public static MenusListFragment newInstance(int itemCount) {
         final MenusListFragment fragment = new MenusListFragment();
@@ -50,7 +55,7 @@ public class MenusListFragment extends BaseFragment<ViewDataBinding,MenuViewMode
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        RestAPI restAPI = (RestAPI)this;
+
         //attach the view model interface object
         viewModel = new MenuViewModel(ctx.getApplication(),restAPI );
         viewModel.attach(this);
