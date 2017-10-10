@@ -7,6 +7,8 @@ import com.mamags.mamag.api.RestAPI;
 
 import java.util.concurrent.TimeUnit;
 
+import javax.inject.Inject;
+
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
@@ -19,6 +21,7 @@ import io.reactivex.schedulers.Schedulers;
 public class MenuViewModel extends BaseViewModel<MenuView> {
     //interface object of rest api
     RestAPI restAPI;
+
     Disposable menuDisposable;
 
     public MenuViewModel(Application application, RestAPI restAPI) {
@@ -33,7 +36,7 @@ public class MenuViewModel extends BaseViewModel<MenuView> {
         }
 
         menuDisposable = restAPI.searchTweets("paramter")
-                                .delay(1000, TimeUnit.MILLISECONDS)
+                                .delay(3000, TimeUnit.MILLISECONDS)
                                 .subscribeOn(Schedulers.computation())
                                 .observeOn(AndroidSchedulers.mainThread())
                                 .subscribe(menusList -> Iview.loadMenuResults(menusList),

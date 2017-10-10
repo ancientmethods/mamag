@@ -10,19 +10,24 @@ import android.widget.TextView;
 
 import com.mamags.mamag.BaseActivity;
 import com.mamags.mamag.BaseViewModel;
+import com.mamags.mamag.MyApplication;
 import com.mamags.mamag.R;
 import com.mamags.mamag.api.RestAPI;
+import com.mamags.mamag.di.module.ApiModule;
 import com.mamags.mamag.model.Menu;
 import com.mamags.mamag.viewmodel.IView;
 import com.mamags.mamag.viewmodel.MenuViewModel;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import io.reactivex.Flowable;
 
 public class MainActivity extends BaseActivity<ViewDataBinding,BaseViewModel> implements IView{
 
     private TextView mTextMessage;
+
 
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -55,6 +60,7 @@ public class MainActivity extends BaseActivity<ViewDataBinding,BaseViewModel> im
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        MyApplication.getComponent().inject(this);
 
         setContentView(R.layout.activity_main);
         mTextMessage = (TextView) findViewById(R.id.message);

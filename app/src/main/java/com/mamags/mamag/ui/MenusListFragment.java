@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.mamags.mamag.BaseFragment;
 import com.mamags.mamag.BaseViewModel;
+import com.mamags.mamag.MyApplication;
 import com.mamags.mamag.R;
 import com.mamags.mamag.api.RestAPI;
 import com.mamags.mamag.databinding.FragmentMenuListBinding;
@@ -59,9 +60,9 @@ public class MenusListFragment extends BaseFragment<FragmentMenuListBinding,Menu
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //attach the view model interface object
-        restAPI = (RestAPI)getActivity();
-        viewModel = new MenuViewModel(ctx.getApplication(),restAPI );
+        MyApplication.getComponent().inject(this);
+
+        viewModel = new MenuViewModel(ctx.getApplication(),restAPI);
         viewModel.attach(this);
 
     }
