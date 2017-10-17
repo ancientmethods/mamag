@@ -50,7 +50,7 @@ public class NetworkModule {
     @Singleton
     Retrofit provideRetrofit(OkHttpClient okHttpClient, GsonConverterFactory factory) {
         return new Retrofit.Builder()
-                .baseUrl("https://google.co.uk")
+                .baseUrl("http://mamag.co.uk/Stage/Services/FoodDeliveryServices/")
                 .client(okHttpClient)
                 .addConverterFactory(factory)
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())

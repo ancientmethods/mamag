@@ -7,8 +7,8 @@ package com.mamags.mamag.model;
 public class Menu {
 
     private int id;
-    private String name;
-    private String description;
+    private String Name;
+    private String Description;
 
     public Menu() {
     }
@@ -23,18 +23,18 @@ public class Menu {
     }
 
     public String getName() {
-        return name;
+        return Name;
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.Name = name;
     }
 
     public String getDescription() {
-        return description;
+        return Description;
     }
 
     public void setDescription(String description) {
-        this.description = description;
+        this.Description = description;
     }
 }

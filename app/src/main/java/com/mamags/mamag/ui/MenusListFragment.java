@@ -13,6 +13,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
 import com.mamags.mamag.BaseFragment;
 import com.mamags.mamag.BaseViewModel;
 import com.mamags.mamag.MyApplication;
@@ -24,10 +27,15 @@ import com.mamags.mamag.viewmodel.IView;
 import com.mamags.mamag.viewmodel.MenuView;
 import com.mamags.mamag.viewmodel.MenuViewModel;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.List;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
+
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * <p>A fragment that shows a list of items as a modal bottom sheet.</p>
@@ -65,6 +73,16 @@ public class MenusListFragment extends BaseFragment<FragmentMenuListBinding,Menu
         viewModel = new MenuViewModel(ctx.getApplication(),restAPI);
         viewModel.attach(this);
 
+        Menu menu = new Menu();
+        menu.setName("Menu 1");
+        viewModel.createMenu(menu);
+      /*  Gson gson = new GsonBuilder().create();
+        String json = gson.toJson(menu);
+        try {
+            JSONObject jsonObject1 = new JSONObject(json);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }*/
     }
 
     @Nullable
