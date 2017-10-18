@@ -15,11 +15,11 @@ public class FDSRequest {
     /// Defines the device type that sent the request
     /// </summary>
 
-    public String DeviceType = "ANDROID";
+    public int DeviceType = 0;
 
 
     /// <summary>
     /// Defines the action to be performed when the request is received
     /// </summary>
-    public String CrudOption = "Add";
+    public int CrudOption =0;
 }

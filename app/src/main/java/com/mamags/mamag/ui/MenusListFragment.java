@@ -6,6 +6,7 @@ import android.databinding.ViewDataBinding;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetDialogFragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -58,6 +59,8 @@ public class MenusListFragment extends BaseFragment<FragmentMenuListBinding,Menu
     @Inject
     RestAPI restAPI;
 
+    SwipeRefreshLayout swipeRefreshLayout;
+
     // TODO: Customize parameters
     public static MenusListFragment newInstance(int itemCount) {
         final MenusListFragment fragment = new MenusListFragment();
@@ -81,8 +84,8 @@ public class MenusListFragment extends BaseFragment<FragmentMenuListBinding,Menu
         menu1.setName("Menu 1");
         menu1.setDescription("Menu desc");
 
-        //menuAddRequest.CrudOption = RequestAction.Add;
-       // menuAddRequest.setMenu(menu1);
+        menuAddRequest.CrudOption = RequestAction.Add.getValue();
+        menuAddRequest.setMenu(menu1);
 
 
         Gson gson = new GsonBuilder().create();
@@ -115,7 +118,9 @@ public class MenusListFragment extends BaseFragment<FragmentMenuListBinding,Menu
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        recyclerView = (RecyclerView) view;
+        recyclerView = view.findViewById(R.id.list);
+        swipeRefreshLayout= view.findViewById(R.id.swiperefresh);
+        setupRefreshLayout();
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
         //if this class did not infer type MainViewModel, we wouldn't be able to call the method below
         viewModel.getMenuList();
@@ -179,6 +184,11 @@ public class MenusListFragment extends BaseFragment<FragmentMenuListBinding,Menu
             return menuList.size();
         }
 
+    }
+
+    private void setupRefreshLayout() {
+
+        swipeRefreshLayout.setOnRefreshListener(() -> viewModel.getMenuList());
     }
 
 

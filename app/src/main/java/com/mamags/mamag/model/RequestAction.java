@@ -7,10 +7,19 @@ package com.mamags.mamag.model;
 public enum RequestAction
 
 {
-    undefined,
-    Add,
-    Update,
-    delete,
-    list,
+    undefined(0),
+    Add(1),
+    Update(2),
+    delete(3),
+    list(4);
+    private final int value;
 
+
+
+    RequestAction(int i) {
+        this.value = i;
+    }
+    public int getValue() {
+        return value;
+    }
 }

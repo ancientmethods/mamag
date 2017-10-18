@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <android.support.v4.widget.SwipeRefreshLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/swiperefresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/list"
@@ -11,4 +16,5 @@
     android:paddingTop="@dimen/list_item_spacing_half"
     tools:context="com.mamags.mamag.ui.MenusListFragment"
     tools:listitem="@layout/fragment_menu_list_item" />
+    </android.support.v4.widget.SwipeRefreshLayout>
 </layout>
