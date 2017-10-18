@@ -7,6 +7,7 @@ import com.mamags.mamag.BaseViewModel;
 import com.mamags.mamag.api.RestAPI;
 import com.mamags.mamag.model.FDSresponse;
 import com.mamags.mamag.model.Menu;
+import com.mamags.mamag.model.MenuRequest;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
@@ -53,7 +54,7 @@ public class MenuViewModel extends BaseViewModel<MenuView> {
     }
 
 
-    public void createMenu(Menu menu) {
+    public void createMenu(MenuRequest menu) {
        Call<FDSresponse> fdSresponse= restAPI.createMenu(menu);
 
         fdSresponse.enqueue(new Callback<FDSresponse>() {
@@ -61,8 +62,7 @@ public class MenuViewModel extends BaseViewModel<MenuView> {
             @Override
             public void onResponse(Call<FDSresponse> call, Response<FDSresponse> response) {
                FDSresponse response1 = response.body();
-                Log.d("mamag",response1.getErrorMessage());
-                Log.d("mamag",String.valueOf(response.code()));
+                Log.d("MenuRequest",response.message());
 
 
             }

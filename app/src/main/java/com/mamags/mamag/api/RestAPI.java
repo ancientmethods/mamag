@@ -2,6 +2,7 @@ package com.mamags.mamag.api;
 
 import com.mamags.mamag.model.FDSresponse;
 import com.mamags.mamag.model.Menu;
+import com.mamags.mamag.model.MenuRequest;
 
 import java.util.List;
 
@@ -22,7 +23,7 @@ public interface RestAPI {
     Flowable<List<Menu>> searchTweets(@Query("q") String query);
 
     @POST("processMenuItem")
-    Call<FDSresponse> createMenu (@Body Menu menu);
+    Call<FDSresponse> createMenu (@Body MenuRequest menuRequest);
 
 
 }

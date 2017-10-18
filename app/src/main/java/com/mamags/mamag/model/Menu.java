@@ -6,7 +6,7 @@ package com.mamags.mamag.model;
 
 public class Menu {
 
-    private int id;
+    private int Id;
     private String Name;
     private String Description;
 
@@ -15,11 +15,11 @@ public class Menu {
 
     public int getId() {
 
-        return id;
+        return Id;
     }
 
     public void setId(int id) {
-        this.id = id;
+        this.Id = id;
     }
 
     public String getName() {

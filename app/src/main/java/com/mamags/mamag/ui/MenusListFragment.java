@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +24,8 @@ import com.mamags.mamag.R;
 import com.mamags.mamag.api.RestAPI;
 import com.mamags.mamag.databinding.FragmentMenuListBinding;
 import com.mamags.mamag.model.Menu;
+import com.mamags.mamag.model.MenuRequest;
+import com.mamags.mamag.model.RequestAction;
 import com.mamags.mamag.viewmodel.IView;
 import com.mamags.mamag.viewmodel.MenuView;
 import com.mamags.mamag.viewmodel.MenuViewModel;
@@ -73,9 +76,26 @@ public class MenusListFragment extends BaseFragment<FragmentMenuListBinding,Menu
         viewModel = new MenuViewModel(ctx.getApplication(),restAPI);
         viewModel.attach(this);
 
-        Menu menu = new Menu();
-        menu.setName("Menu 1");
-        viewModel.createMenu(menu);
+        MenuRequest menuAddRequest = new MenuRequest();
+        Menu menu1 = new Menu();
+        menu1.setName("Menu 1");
+        menu1.setDescription("Menu desc");
+
+        //menuAddRequest.CrudOption = RequestAction.Add;
+       // menuAddRequest.setMenu(menu1);
+
+
+        Gson gson = new GsonBuilder().create();
+        String json = gson.toJson(menuAddRequest);
+        try {
+            JSONObject jsonObject1 = new JSONObject(json);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        Log.d("MenuRequest",json);
+
+        viewModel.createMenu(menuAddRequest);
       /*  Gson gson = new GsonBuilder().create();
         String json = gson.toJson(menu);
         try {

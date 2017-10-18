@@ -32,12 +32,16 @@ public abstract class BaseActivity<B extends ViewDataBinding, T extends BaseView
 
     @Override protected void onStop() {
         super.onStop();
-        viewModel.clearSubscriptions();
+        if(viewModel!=null) {
+            viewModel.clearSubscriptions();
+        }
     }
 
     @Override protected void onDestroy() {
         super.onDestroy();
-        viewModel.detach();
+        if(viewModel!=null) {
+            viewModel.detach();
+        }
     }
 
     @Override public void error(Throwable e) {
