@@ -41,4 +41,8 @@ public interface RestAPI {
     Observable<AccountFinishersResponse> getAccountFinishers(@Header("Authorization") String token);
     Observable<AccountMasteriesResponse> getAccountMasteriesToken(@Query("access_token") String token);*/
 
+    //to use with a variable path
+  /*  @GET("characters/{id}")
+    Observable<CharacterOverviewResponse> getCharacter(@Header("Authorization") String token,
+                                                       @Path("id") String id);*/
 }
