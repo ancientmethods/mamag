@@ -1,5 +1,6 @@
 package com.mamags.mamag.di.component;
 
+import com.mamags.mamag.BaseViewModel;
 import com.mamags.mamag.di.module.ApiModule;
 import com.mamags.mamag.di.module.AppModule;
 import com.mamags.mamag.di.module.NetworkModule;
@@ -22,6 +23,7 @@ public interface AppComponent {
 
     void inject(MainActivity activity);
     void inject(MenusListFragment fragment);
+
 
 
     //void inject(MenuViewModel menuViewModel);

@@ -1,6 +1,7 @@
 package com.mamags.mamag.viewmodel;
 
 import com.mamags.mamag.model.Menu;
+import com.mamags.mamag.model.Responses.FDSresponse;
 
 import java.util.List;
 
@@ -11,4 +12,6 @@ import java.util.List;
 public interface MenuView extends IView {
 
     void loadMenuResults(List<Menu> menus);
+    void createMenuResponse(FDSresponse fdSresponse);
+
 }

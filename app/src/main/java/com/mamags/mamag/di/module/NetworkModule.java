@@ -3,6 +3,7 @@ package com.mamags.mamag.di.module;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.mamags.mamag.api.AutoValueGsonFactory;
+import com.mamags.mamag.constants.MamaConstants;
 
 
 import javax.inject.Singleton;
@@ -50,7 +51,7 @@ public class NetworkModule {
     @Singleton
     Retrofit provideRetrofit(OkHttpClient okHttpClient, GsonConverterFactory factory) {
         return new Retrofit.Builder()
-                .baseUrl("http://mamag.co.uk/Stage/Services/FoodDeliveryServices.svc/")
+                .baseUrl(MamaConstants.API_URL)
                 .client(okHttpClient)
                 .addConverterFactory(factory)
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())

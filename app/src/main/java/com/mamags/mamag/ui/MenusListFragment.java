@@ -1,11 +1,9 @@
 package com.mamags.mamag.ui;
 
 import android.content.Context;
-import android.databinding.DataBindingUtil;
-import android.databinding.ViewDataBinding;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.BottomSheetDialogFragment;
+import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -17,17 +15,15 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonObject;
 import com.mamags.mamag.BaseFragment;
-import com.mamags.mamag.BaseViewModel;
 import com.mamags.mamag.MyApplication;
 import com.mamags.mamag.R;
-import com.mamags.mamag.api.RestAPI;
+import com.mamags.mamag.Utils.DisplayUtils;
 import com.mamags.mamag.databinding.FragmentMenuListBinding;
 import com.mamags.mamag.model.Menu;
 import com.mamags.mamag.model.MenuRequest;
-import com.mamags.mamag.model.RequestAction;
-import com.mamags.mamag.viewmodel.IView;
+import com.mamags.mamag.constants.RequestAction;
+import com.mamags.mamag.model.Responses.FDSresponse;
 import com.mamags.mamag.viewmodel.MenuView;
 import com.mamags.mamag.viewmodel.MenuViewModel;
 
@@ -35,11 +31,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.List;
-
-import javax.inject.Inject;
-import javax.inject.Singleton;
-
-import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * <p>A fragment that shows a list of items as a modal bottom sheet.</p>
@@ -54,19 +45,14 @@ public class MenusListFragment extends BaseFragment<FragmentMenuListBinding,Menu
 
     // TODO: Customize parameter argument names
     private static final String ARG_ITEM_COUNT = "item_count";
-    RecyclerView recyclerView;
 
-    @Inject
-    RestAPI restAPI;
-
-    SwipeRefreshLayout swipeRefreshLayout;
 
     // TODO: Customize parameters
     public static MenusListFragment newInstance(int itemCount) {
         final MenusListFragment fragment = new MenusListFragment();
         final Bundle args = new Bundle();
         args.putInt(ARG_ITEM_COUNT, itemCount);
-        fragment.setArguments(args);
+
         return fragment;
     }
 
@@ -118,29 +104,24 @@ public class MenusListFragment extends BaseFragment<FragmentMenuListBinding,Menu
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        recyclerView = view.findViewById(R.id.list);
-        swipeRefreshLayout= view.findViewById(R.id.swiperefresh);
+
         setupRefreshLayout();
-        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
+        binding.list.setLayoutManager(new GridLayoutManager(getContext(), 2));
         //if this class did not infer type MainViewModel, we wouldn't be able to call the method below
         viewModel.getMenuList();
     }
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
 
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-    }
 
     @Override
     public void loadMenuResults(List<Menu> menuList) {
         //recyclerView.setAdapter(new MenuAdapter(14));
-        recyclerView.setAdapter(new MenuAdapter(menuList));
+        binding.list.setAdapter(new MenuAdapter(menuList));
+    }
+
+    @Override
+    public void createMenuResponse(FDSresponse fdSresponse) {
+        DisplayUtils.displaySnackbar(binding.getRoot(),String.valueOf(fdSresponse.getResponseCode()), Snackbar.LENGTH_LONG,ctx);
     }
 
     public interface Listener {
@@ -188,7 +169,7 @@ public class MenusListFragment extends BaseFragment<FragmentMenuListBinding,Menu
 
     private void setupRefreshLayout() {
 
-        swipeRefreshLayout.setOnRefreshListener(() -> viewModel.getMenuList());
+        binding.swiperefresh.setOnRefreshListener(() -> viewModel.getMenuList());
     }
 
 

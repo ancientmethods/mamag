@@ -3,13 +3,18 @@ package com.mamags.mamag;
 import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.mamags.mamag.Utils.DisplayUtils;
+import com.mamags.mamag.api.RestAPI;
 import com.mamags.mamag.viewmodel.IView;
+
+import javax.inject.Inject;
 
 /**
  * Created by samer on 01/10/2017.
@@ -20,6 +25,8 @@ public abstract class BaseFragment<B extends ViewDataBinding, T extends BaseView
     protected T viewModel;
     protected B binding;
     public FragmentActivity ctx;
+
+    @Inject public RestAPI restAPI;
 
     /**
      * ViewModel must be initialized before bindView() is called
@@ -60,6 +67,6 @@ public abstract class BaseFragment<B extends ViewDataBinding, T extends BaseView
     }
 
     @Override public void error(String message) {
-        Toast.makeText(ctx, "error", Toast.LENGTH_LONG).show();
+        DisplayUtils.displaySnackbar(binding.getRoot(),message,Snackbar.LENGTH_LONG,ctx);
     }
 }

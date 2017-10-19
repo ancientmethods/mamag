@@ -1,18 +1,21 @@
 package com.mamags.mamag.model;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Created by Samer on 18/10/2017.
  */
 
 public class MenuRequest extends FDSRequest {
 
-    Menu MenuEntity;
+    @SerializedName("MenuEntity")
+    Menu menu;
 
     public Menu getMenu() {
-        return MenuEntity;
+        return menu;
     }
 
     public void setMenu(Menu menu) {
-        this.MenuEntity = menu;
+        this.menu = menu;
     }
 }

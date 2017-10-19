@@ -1,4 +1,6 @@
-package com.mamags.mamag.model;
+package com.mamags.mamag.model.Responses;
+
+import com.google.gson.annotations.SerializedName;
 
 /**
  * Created by Samer on 18/10/2017.

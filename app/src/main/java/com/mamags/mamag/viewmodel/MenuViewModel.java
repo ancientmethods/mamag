@@ -1,25 +1,16 @@
 package com.mamags.mamag.viewmodel;
 
 import android.app.Application;
-import android.util.Log;
 
 import com.mamags.mamag.BaseViewModel;
 import com.mamags.mamag.api.RestAPI;
-import com.mamags.mamag.model.FDSresponse;
-import com.mamags.mamag.model.Menu;
 import com.mamags.mamag.model.MenuRequest;
 
-import java.io.IOException;
 import java.util.concurrent.TimeUnit;
-
-import javax.inject.Inject;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 /**
  * Created by samer on 30/09/2017.
@@ -31,6 +22,7 @@ public class MenuViewModel extends BaseViewModel<MenuView> {
     RestAPI restAPI;
 
     Disposable menuDisposable;
+    Disposable createMenuDisposable;
 
     public MenuViewModel(Application application, RestAPI restAPI) {
         super(application);
@@ -43,11 +35,11 @@ public class MenuViewModel extends BaseViewModel<MenuView> {
             menuDisposable.dispose();
         }
 
-        menuDisposable = restAPI.searchTweets("paramter")
+        menuDisposable = restAPI.getMenusList()
                                 .delay(3000, TimeUnit.MILLISECONDS)
                                 .subscribeOn(Schedulers.computation())
                                 .observeOn(AndroidSchedulers.mainThread())
-                                .subscribe(menusList -> Iview.loadMenuResults(menusList),
+                                .subscribe(menuListResponse -> Iview.loadMenuResults(menuListResponse.getMenuList()),
                                            throwable -> Iview.error("error on menu list"));
 
         compositeDisposable.add(menuDisposable);
@@ -55,24 +47,20 @@ public class MenuViewModel extends BaseViewModel<MenuView> {
 
 
     public void createMenu(MenuRequest menu) {
-       Call<FDSresponse> fdSresponse= restAPI.createMenu(menu);
 
-        fdSresponse.enqueue(new Callback<FDSresponse>() {
-
-            @Override
-            public void onResponse(Call<FDSresponse> call, Response<FDSresponse> response) {
-               FDSresponse response1 = response.body();
-                Log.d("MenuRequest",response.message());
-
-
-            }
-
-            @Override
-            public void onFailure(Call<FDSresponse> call, Throwable t) {
-
-            }
-        });
+        if(createMenuDisposable!=null){
+            createMenuDisposable.dispose();
+        }
+        createMenuDisposable = restAPI.createMenu(menu)
+                                .subscribeOn(Schedulers.computation())
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .subscribe(fdSresponse -> Iview.createMenuResponse(fdSresponse),
+                                            throwable -> Iview.error("Error creating menu"))
+                                ;
 
 
+
+
+        compositeDisposable.add(createMenuDisposable);
     }
 }
