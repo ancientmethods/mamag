@@ -20,6 +20,7 @@ import com.mamags.mamag.MyApplication;
 import com.mamags.mamag.R;
 import com.mamags.mamag.Utils.DisplayUtils;
 import com.mamags.mamag.databinding.FragmentMenuListBinding;
+import com.mamags.mamag.model.FDSRequest;
 import com.mamags.mamag.model.Menu;
 import com.mamags.mamag.model.MenuRequest;
 import com.mamags.mamag.constants.RequestAction;
@@ -108,7 +109,9 @@ public class MenusListFragment extends BaseFragment<FragmentMenuListBinding,Menu
         setupRefreshLayout();
         binding.list.setLayoutManager(new GridLayoutManager(getContext(), 2));
         //if this class did not infer type MainViewModel, we wouldn't be able to call the method below
-        viewModel.getMenuList();
+        FDSRequest request = new FDSRequest();
+        request.CrudOption = RequestAction.list.getValue();
+        viewModel.getMenuList(request);
     }
 
 
@@ -168,8 +171,9 @@ public class MenusListFragment extends BaseFragment<FragmentMenuListBinding,Menu
     }
 
     private void setupRefreshLayout() {
-
-        binding.swiperefresh.setOnRefreshListener(() -> viewModel.getMenuList());
+        FDSRequest request = new FDSRequest();
+        request.CrudOption = RequestAction.list.getValue();
+        binding.swiperefresh.setOnRefreshListener(() -> viewModel.getMenuList(request));
     }
 
 

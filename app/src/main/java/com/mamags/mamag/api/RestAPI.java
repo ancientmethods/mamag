@@ -1,5 +1,6 @@
 package com.mamags.mamag.api;
 
+import com.mamags.mamag.model.FDSRequest;
 import com.mamags.mamag.model.Responses.FDSresponse;
 import com.mamags.mamag.model.Menu;
 import com.mamags.mamag.model.MenuRequest;
@@ -28,8 +29,8 @@ public interface RestAPI {
     Flowable<List<Menu>> searchTweets(@Query("q") String query);
 
 
-    @POST("getMenus")
-    Single<MenuListResponse> getMenusList();
+    @POST("getMenuItems")
+    Single<MenuListResponse> getMenusList(@Body FDSRequest fdsRequest);
 
     @POST("processMenuItem")
     Single<FDSresponse> createMenu (@Body MenuRequest menuRequest);

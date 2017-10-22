@@ -4,6 +4,7 @@ import android.app.Application;
 
 import com.mamags.mamag.BaseViewModel;
 import com.mamags.mamag.api.RestAPI;
+import com.mamags.mamag.model.FDSRequest;
 import com.mamags.mamag.model.MenuRequest;
 
 import java.util.concurrent.TimeUnit;
@@ -29,13 +30,13 @@ public class MenuViewModel extends BaseViewModel<MenuView> {
         this.restAPI = restAPI;
     }
 
-    public void getMenuList() {
+    public void getMenuList(FDSRequest fdsRequest) {
         //this should reload data if old data is still there
         if(menuDisposable!=null){
             menuDisposable.dispose();
         }
 
-        menuDisposable = restAPI.getMenusList()
+        menuDisposable = restAPI.getMenusList(fdsRequest)
                                 .delay(3000, TimeUnit.MILLISECONDS)
                                 .subscribeOn(Schedulers.computation())
                                 .observeOn(AndroidSchedulers.mainThread())
