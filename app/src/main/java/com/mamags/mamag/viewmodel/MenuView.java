@@ -2,6 +2,7 @@ package com.mamags.mamag.viewmodel;
 
 import com.mamags.mamag.model.Menu;
 import com.mamags.mamag.model.Responses.FDSresponse;
+import com.mamags.mamag.model.Responses.MenuListResponse;
 
 import java.util.List;
 
@@ -11,7 +12,7 @@ import java.util.List;
 
 public interface MenuView extends IView {
 
-    void loadMenuResults(List<Menu> menus);
+    void loadMenuResults(MenuListResponse menuListResponse);
     void createMenuResponse(FDSresponse fdSresponse);
 
 }

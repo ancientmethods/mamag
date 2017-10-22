@@ -4,8 +4,8 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.GridLayoutManager;
+
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,8 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.mamags.mamag.BaseFragment;
 import com.mamags.mamag.MyApplication;
 import com.mamags.mamag.R;
@@ -25,11 +23,10 @@ import com.mamags.mamag.model.Menu;
 import com.mamags.mamag.model.MenuRequest;
 import com.mamags.mamag.constants.RequestAction;
 import com.mamags.mamag.model.Responses.FDSresponse;
+import com.mamags.mamag.model.Responses.MenuListResponse;
 import com.mamags.mamag.viewmodel.MenuView;
 import com.mamags.mamag.viewmodel.MenuViewModel;
 
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.List;
 
@@ -74,18 +71,7 @@ public class MenusListFragment extends BaseFragment<FragmentMenuListBinding,Menu
         menuAddRequest.CrudOption = RequestAction.Add.getValue();
         menuAddRequest.setMenu(menu1);
 
-
-        Gson gson = new GsonBuilder().create();
-        String json = gson.toJson(menuAddRequest);
-        try {
-            JSONObject jsonObject1 = new JSONObject(json);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        Log.d("MenuRequest",json);
-
-        viewModel.createMenu(menuAddRequest);
+        //viewModel.createMenu(menuAddRequest);
       /*  Gson gson = new GsonBuilder().create();
         String json = gson.toJson(menu);
         try {
@@ -107,24 +93,38 @@ public class MenusListFragment extends BaseFragment<FragmentMenuListBinding,Menu
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
 
         setupRefreshLayout();
-        binding.list.setLayoutManager(new GridLayoutManager(getContext(), 2));
+        binding.swiperefresh.setRefreshing(true);
+        binding.list.setLayoutManager(new LinearLayoutManager(getContext()));
         //if this class did not infer type MainViewModel, we wouldn't be able to call the method below
         FDSRequest request = new FDSRequest();
         request.CrudOption = RequestAction.list.getValue();
+
+        viewModel.setRecyclerViewVisibility(true);
         viewModel.getMenuList(request);
+        binding.setViewmodel(viewModel);
     }
 
 
 
     @Override
-    public void loadMenuResults(List<Menu> menuList) {
+    public void loadMenuResults(MenuListResponse menuListResponse) {
         //recyclerView.setAdapter(new MenuAdapter(14));
-        binding.list.setAdapter(new MenuAdapter(menuList));
+        binding.swiperefresh.setRefreshing(false);
+        viewModel.setRecyclerViewVisibility(true);
+        binding.list.setAdapter(new MenuAdapter(menuListResponse.getMenuList()));
+        DisplayUtils.displaySnackbar(binding.getRoot(),String.valueOf(menuListResponse.getResponseCode()), Snackbar.LENGTH_LONG,ctx);
+
     }
 
     @Override
     public void createMenuResponse(FDSresponse fdSresponse) {
         DisplayUtils.displaySnackbar(binding.getRoot(),String.valueOf(fdSresponse.getResponseCode()), Snackbar.LENGTH_LONG,ctx);
+    }
+
+    @Override
+    public void showNoDataView() {
+        viewModel.setRecyclerViewVisibility(false);
+        binding.swiperefresh.setRefreshing(false);
     }
 
     public interface Listener {
@@ -138,7 +138,7 @@ public class MenusListFragment extends BaseFragment<FragmentMenuListBinding,Menu
         ViewHolder(LayoutInflater inflater, ViewGroup parent) {
             // TODO: Customize the item layout
             super(inflater.inflate(R.layout.fragment_menu_list_item, parent, false));
-            text = (TextView) itemView.findViewById(R.id.text);
+            text = itemView.findViewById(R.id.text);
 
             text.setOnClickListener(v ->{});
         }
@@ -171,10 +171,13 @@ public class MenusListFragment extends BaseFragment<FragmentMenuListBinding,Menu
     }
 
     private void setupRefreshLayout() {
-        FDSRequest request = new FDSRequest();
-        request.CrudOption = RequestAction.list.getValue();
-        binding.swiperefresh.setOnRefreshListener(() -> viewModel.getMenuList(request));
+
+        binding.swiperefresh.setOnRefreshListener(() -> {
+            FDSRequest request = new FDSRequest();
+            request.CrudOption = RequestAction.list.getValue();
+            viewModel.getMenuList(request);});
     }
+
 
 
 }

@@ -51,4 +51,9 @@ public abstract class BaseActivity<B extends ViewDataBinding, T extends BaseView
     @Override public void error(String message) {
         Toast.makeText(this, "Error", Toast.LENGTH_LONG).show();
     }
+
+    @Override
+    public void showNoDataView() {
+
+    }
 }

@@ -5,13 +5,16 @@ import com.mamags.mamag.model.Menu;
 
 import java.util.List;
 
+import io.reactivex.annotations.Nullable;
+
 /**
  * Created by samer on 19/10/2017.
  */
 
 public class MenuListResponse extends FDSresponse {
 
-    @SerializedName("MenuEntity")
+    @SerializedName("Items")
+    @Nullable
     private List<Menu> menuList;
 
     public List<Menu> getMenuList() {

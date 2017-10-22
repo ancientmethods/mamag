@@ -24,7 +24,7 @@ import javax.inject.Inject;
 
 import io.reactivex.Flowable;
 
-public class MainActivity extends BaseActivity<ViewDataBinding,BaseViewModel> implements IView{
+public class MainActivity extends BaseActivity<ViewDataBinding,BaseViewModel>{
 
     private TextView mTextMessage;
 
@@ -48,7 +48,6 @@ public class MainActivity extends BaseActivity<ViewDataBinding,BaseViewModel> im
 
 
                 case R.id.navigation_notifications:
-                    mTextMessage.setText(R.string.title_notifications);
                     return true;
             }
             return false;

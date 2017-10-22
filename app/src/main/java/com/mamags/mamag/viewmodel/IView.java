@@ -10,4 +10,5 @@ public interface IView {
     void error(Throwable e);
 
     void error(String message);
+    void showNoDataView();
 }
