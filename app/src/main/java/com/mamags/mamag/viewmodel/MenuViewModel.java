@@ -32,7 +32,6 @@ public class MenuViewModel extends BaseViewModel<MenuView> {
 
 
 
-    public ObservableField<Boolean> recyclerViewVisibility= new ObservableField<>();
 
 
 
@@ -66,9 +65,6 @@ public class MenuViewModel extends BaseViewModel<MenuView> {
     }
 
 
-    public void setRecyclerViewVisibility(boolean visibility) {
-       recyclerViewVisibility.set(true);
-    }
 
     public void createMenu(MenuRequest menu) {
 

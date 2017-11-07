@@ -99,9 +99,8 @@ public class MenusListFragment extends BaseFragment<FragmentMenuListBinding,Menu
         FDSRequest request = new FDSRequest();
         request.CrudOption = RequestAction.list.getValue();
 
-        viewModel.setRecyclerViewVisibility(true);
+        binding.setRecyclerViewVisibility(true);
         viewModel.getMenuList(request);
-        binding.setViewmodel(viewModel);
     }
 
 
@@ -110,7 +109,7 @@ public class MenusListFragment extends BaseFragment<FragmentMenuListBinding,Menu
     public void loadMenuResults(MenuListResponse menuListResponse) {
         //recyclerView.setAdapter(new MenuAdapter(14));
         binding.swiperefresh.setRefreshing(false);
-        viewModel.setRecyclerViewVisibility(true);
+        binding.setRecyclerViewVisibility(true);
         binding.list.setAdapter(new MenuAdapter(menuListResponse.getMenuList()));
         DisplayUtils.displaySnackbar(binding.getRoot(),String.valueOf(menuListResponse.getResponseCode()), Snackbar.LENGTH_LONG,ctx);
 
@@ -123,7 +122,7 @@ public class MenusListFragment extends BaseFragment<FragmentMenuListBinding,Menu
 
     @Override
     public void showNoDataView() {
-        viewModel.setRecyclerViewVisibility(false);
+        binding.setRecyclerViewVisibility(false);
         binding.swiperefresh.setRefreshing(false);
     }
 

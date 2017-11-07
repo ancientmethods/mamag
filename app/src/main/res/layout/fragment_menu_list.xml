@@ -3,9 +3,11 @@
 
     <data>
         <import type="android.view.View"/>
+
+
         <variable
-            name="viewmodel"
-            type="com.mamags.mamag.viewmodel.MenuViewModel"></variable>
+            name="recyclerViewVisibility"
+            type="Boolean"></variable>
     </data>
 
     <FrameLayout
@@ -27,7 +29,7 @@
             android:clipToPadding="false"
             android:paddingBottom="@dimen/list_item_spacing_half"
             android:paddingTop="@dimen/list_item_spacing_half"
-            android:visibility="@{viewmodel.recyclerViewVisibility ? View.VISIBLE : View.GONE}"
+            android:visibility="@{recyclerViewVisibility ? View.VISIBLE : View.GONE}"
             tools:context="com.mamags.mamag.ui.MenusListFragment"
             tools:listitem="@layout/fragment_menu_list_item" />
 
@@ -40,7 +42,7 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:text="no data available"
-            android:visibility="@{viewmodel.recyclerViewVisibility ? View.GONE : View.VISIBLE}" />
+            android:visibility="@{recyclerViewVisibility ? View.GONE : View.VISIBLE}" />
 
     </FrameLayout>
 </layout>
