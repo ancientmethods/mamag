@@ -1,17 +1,13 @@
 package com.mamags.mamag.viewmodel;
 
 import android.app.Application;
-import android.databinding.Bindable;
-import android.databinding.ObservableField;
 
 import com.mamags.mamag.BaseViewModel;
 import com.mamags.mamag.api.RestAPI;
+import com.mamags.mamag.interfaces.MenuView;
 import com.mamags.mamag.model.FDSRequest;
-import com.mamags.mamag.model.Menu;
 import com.mamags.mamag.model.MenuRequest;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -28,9 +24,6 @@ public class MenuViewModel extends BaseViewModel<MenuView> {
     RestAPI restAPI;
 
     Disposable menuDisposable;
-    Disposable createMenuDisposable;
-
-
 
 
 
@@ -66,21 +59,7 @@ public class MenuViewModel extends BaseViewModel<MenuView> {
 
 
 
-    public void createMenu(MenuRequest menu) {
 
-        if (createMenuDisposable != null) {
-            createMenuDisposable.dispose();
-        }
-        createMenuDisposable = restAPI.createMenu(menu)
-                .subscribeOn(Schedulers.computation())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(fdSresponse -> Iview.createMenuResponse(fdSresponse),
-                        throwable -> Iview.error("Error creating menu"))
-        ;
-
-
-        compositeDisposable.add(createMenuDisposable);
-    }
 
 
 

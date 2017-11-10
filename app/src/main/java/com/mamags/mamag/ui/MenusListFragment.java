@@ -1,6 +1,5 @@
 package com.mamags.mamag.ui;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -8,13 +7,11 @@ import android.support.design.widget.Snackbar;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.mamags.mamag.BaseFragment;
 import com.mamags.mamag.MyApplication;
 import com.mamags.mamag.R;
@@ -22,11 +19,10 @@ import com.mamags.mamag.Utils.DisplayUtils;
 import com.mamags.mamag.databinding.FragmentMenuListBinding;
 import com.mamags.mamag.model.FDSRequest;
 import com.mamags.mamag.model.Menu;
-import com.mamags.mamag.model.MenuRequest;
 import com.mamags.mamag.constants.RequestAction;
 import com.mamags.mamag.model.Responses.FDSresponse;
 import com.mamags.mamag.model.Responses.MenuListResponse;
-import com.mamags.mamag.viewmodel.MenuView;
+import com.mamags.mamag.interfaces.MenuView;
 import com.mamags.mamag.viewmodel.MenuViewModel;
 
 
@@ -68,15 +64,7 @@ public class MenusListFragment extends BaseFragment<FragmentMenuListBinding,Menu
         viewModel = new MenuViewModel(ctx.getApplication(),restAPI);
         viewModel.attach(this);
 
-        MenuRequest menuAddRequest = new MenuRequest();
-        Menu menu1 = new Menu();
-        menu1.setName("Menu 1");
-        menu1.setDescription("Menu desc");
 
-        menuAddRequest.CrudOption = RequestAction.Add.getValue();
-        menuAddRequest.setMenu(menu1);
-
-        //viewModel.createMenu(menuAddRequest);
       /*  Gson gson = new GsonBuilder().create();
         String json = gson.toJson(menu);
         try {
@@ -124,10 +112,7 @@ public class MenusListFragment extends BaseFragment<FragmentMenuListBinding,Menu
 
     }
 
-    @Override
-    public void createMenuResponse(FDSresponse fdSresponse) {
-        DisplayUtils.displaySnackbar(binding.getRoot(),String.valueOf(fdSresponse.getResponseCode()), Snackbar.LENGTH_LONG,ctx);
-    }
+
 
     @Override
     public void showNoDataView() {

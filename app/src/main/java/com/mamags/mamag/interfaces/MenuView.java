@@ -1,10 +1,7 @@
-package com.mamags.mamag.viewmodel;
+package com.mamags.mamag.interfaces;
 
-import com.mamags.mamag.model.Menu;
-import com.mamags.mamag.model.Responses.FDSresponse;
+import com.mamags.mamag.interfaces.IView;
 import com.mamags.mamag.model.Responses.MenuListResponse;
-
-import java.util.List;
 
 /**
  * Created by samer on 01/10/2017.
@@ -13,6 +10,5 @@ import java.util.List;
 public interface MenuView extends IView {
 
     void loadMenuResults(MenuListResponse menuListResponse);
-    void createMenuResponse(FDSresponse fdSresponse);
 
 }

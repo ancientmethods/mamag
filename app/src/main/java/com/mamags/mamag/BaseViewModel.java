@@ -4,9 +4,7 @@ import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
 
 import com.mamags.mamag.api.RestAPI;
-import com.mamags.mamag.viewmodel.IView;
-
-import javax.inject.Inject;
+import com.mamags.mamag.interfaces.IView;
 
 import io.reactivex.disposables.CompositeDisposable;
 
@@ -15,6 +13,7 @@ import io.reactivex.disposables.CompositeDisposable;
  */
 
 public class BaseViewModel<T extends IView> extends AndroidViewModel {
+
 
 
 

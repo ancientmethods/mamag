@@ -1,4 +1,4 @@
-package com.mamags.mamag.viewmodel;
+package com.mamags.mamag.interfaces;
 
 /**
  * View part of MVVM, the activities and fragment implement this

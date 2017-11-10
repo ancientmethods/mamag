@@ -6,7 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
 import com.mamags.mamag.api.RestAPI;
-import com.mamags.mamag.viewmodel.IView;
+import com.mamags.mamag.interfaces.IView;
 
 import javax.inject.Inject;
 
@@ -20,7 +20,7 @@ import javax.inject.Inject;
 public abstract class BaseActivity<B extends ViewDataBinding, T extends BaseViewModel> extends AppCompatActivity implements IView {
 
     protected T viewModel;
-    B binding;
+     public B binding;
 
     @Inject
     public RestAPI restAPI;
@@ -31,9 +31,9 @@ public abstract class BaseActivity<B extends ViewDataBinding, T extends BaseView
      * @param layout layout for the activity
      */
     protected final void bindView(int layout) {
-        if (viewModel == null) {
+        /*if (viewModel == null) {
             throw new IllegalStateException("viewModel must not be null and should be injected via activityComponent().inject(this)");
-        }
+        }*/
         binding = DataBindingUtil.setContentView(this, layout);
     }
 

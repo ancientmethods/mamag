@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+<data>
+    <import type="android.view.View"/>
+    <variable name="isLoading" type="boolean"/>
+</data>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -34,3 +40,4 @@
         app:menu="@menu/navigation" />
 
 </LinearLayout>
+</layout>

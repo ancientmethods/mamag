@@ -12,7 +12,7 @@ import android.widget.Toast;
 
 import com.mamags.mamag.Utils.DisplayUtils;
 import com.mamags.mamag.api.RestAPI;
-import com.mamags.mamag.viewmodel.IView;
+import com.mamags.mamag.interfaces.IView;
 
 import javax.inject.Inject;
 
