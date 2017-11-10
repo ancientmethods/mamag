@@ -1,6 +1,7 @@
 package com.mamags.mamag.ui;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -13,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.mamags.mamag.BaseFragment;
 import com.mamags.mamag.MyApplication;
 import com.mamags.mamag.R;
@@ -30,6 +32,7 @@ import com.mamags.mamag.viewmodel.MenuViewModel;
 
 import java.util.List;
 
+
 /**
  * <p>A fragment that shows a list of items as a modal bottom sheet.</p>
  * <p>You can show this modal bottom sheet from your activity like this:</p>
@@ -43,6 +46,8 @@ public class MenusListFragment extends BaseFragment<FragmentMenuListBinding,Menu
 
     // TODO: Customize parameter argument names
     private static final String ARG_ITEM_COUNT = "item_count";
+
+
 
 
     // TODO: Customize parameters
@@ -101,7 +106,11 @@ public class MenusListFragment extends BaseFragment<FragmentMenuListBinding,Menu
 
         binding.setRecyclerViewVisibility(true);
         viewModel.getMenuList(request);
+
+        binding.newMeal.setOnClickListener(v -> startActivity(new Intent(ctx,CreateMenuActivity.class)));
     }
+
+
 
 
 

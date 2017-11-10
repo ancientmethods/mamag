@@ -5,7 +5,10 @@ import android.databinding.ViewDataBinding;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
+import com.mamags.mamag.api.RestAPI;
 import com.mamags.mamag.viewmodel.IView;
+
+import javax.inject.Inject;
 
 /**
  * Created by samer on 30/09/2017.
@@ -18,6 +21,10 @@ public abstract class BaseActivity<B extends ViewDataBinding, T extends BaseView
 
     protected T viewModel;
     B binding;
+
+    @Inject
+    public RestAPI restAPI;
+
 
     /**
      * ViewModel must be initialized before bindView() is called

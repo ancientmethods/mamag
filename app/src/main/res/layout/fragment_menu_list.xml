@@ -10,7 +10,7 @@
             type="Boolean"></variable>
     </data>
 
-    <FrameLayout
+    <RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_height="wrap_content"
@@ -36,6 +36,46 @@
 
     </android.support.v4.widget.SwipeRefreshLayout>
 
+        <com.getbase.floatingactionbutton.FloatingActionsMenu xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:fab="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/multiple_actions"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"
+            fab:fab_addButtonColorNormal="@color/colorPrimaryDark"
+            fab:fab_addButtonColorPressed="@color/colorPrimary"
+            fab:fab_addButtonPlusIconColor="@color/white"
+            fab:fab_labelStyle="@style/menu_labels_style"
+            fab:fab_labelsPosition="left">
+
+            <com.getbase.floatingactionbutton.FloatingActionButton
+                android:id="@+id/new_menu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                fab:fab_colorNormal="@color/colorPrimaryDark"
+                fab:fab_colorPressed="@color/colorPrimary"
+                fab:fab_title="Add menu"
+                fab:fab_icon="@drawable/ic_add_black_24dp"
+
+                fab:fab_size="mini"
+                />
+            <com.getbase.floatingactionbutton.FloatingActionButton
+                android:id="@+id/new_meal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                fab:fab_colorNormal="@color/colorPrimaryDark"
+                fab:fab_colorPressed="@color/colorPrimary"
+                fab:fab_title="Add meal"
+                fab:fab_icon="@drawable/ic_add_black_24dp"
+
+                fab:fab_size="mini"
+                />
+
+        </com.getbase.floatingactionbutton.FloatingActionsMenu>
+
         <TextView
             android:id="@+id/empty_view"
             android:layout_width="match_parent"
@@ -44,5 +84,5 @@
             android:text="no data available"
             android:visibility="@{recyclerViewVisibility ? View.GONE : View.VISIBLE}" />
 
-    </FrameLayout>
+    </RelativeLayout>
 </layout>

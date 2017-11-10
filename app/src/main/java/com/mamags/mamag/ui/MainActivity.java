@@ -36,19 +36,15 @@ public class MainActivity extends BaseActivity<ViewDataBinding,BaseViewModel>{
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
-                case R.id.navigation_home:
-                    mTextMessage.setText(R.string.title_home);
-                    return true;
                 case R.id.navigation_dashboard:
                     mTextMessage.setText(R.string.title_dashboard);
                     return true;
                 case R.id.navigation_menus:
                     FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
                     ft.replace(R.id.content, new MenusListFragment()).commit();
-
-
-                case R.id.navigation_notifications:
                     return true;
+
+
             }
             return false;
         }

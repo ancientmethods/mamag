@@ -11,12 +11,12 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
-            // ...
-            javaCompileOptions {
-                annotationProcessorOptions {
-                    arguments = ['autovaluegson.defaultCollectionsToEmpty': 'true']
-                }
+        // ...
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = ['autovaluegson.defaultCollectionsToEmpty': 'true']
             }
+        }
 
 
     }
@@ -45,6 +45,7 @@ android {
 }
 
 dependencies {
+    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     compile fileTree(include: ['*.jar'], dir: 'libs')
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
@@ -83,7 +84,7 @@ dependencies {
     provided 'com.ryanharter.auto.value:auto-value-gson:0.6.0'
 
 
-
+    compile 'com.getbase:floatingactionbutton:1.9.0'
 
 
 }
