@@ -10,7 +10,7 @@ import com.mamags.mamag.R;
 import com.mamags.mamag.databinding.ActivityMainBinding;
 import com.mamags.mamag.viewmodel.MenuViewModel;
 
-public class MainActivity extends BaseActivity<ActivityMainBinding,MenuViewModel>{
+public class MainActivity extends BaseActivity<ActivityMainBinding,MenuViewModel> implements MenusListFragment.Listener{
 
 
 
@@ -44,4 +44,13 @@ public class MainActivity extends BaseActivity<ActivityMainBinding,MenuViewModel
     }
 
 
+    @Override
+    public void onMenuClicked(int position) {
+        switch (position){
+            case 1:
+                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                ft.replace(R.id.content, new MealTypeListFragment()).commit();
+                break;
+        }
+    }
 }

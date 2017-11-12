@@ -1,6 +1,7 @@
 package com.mamags.mamag.interfaces;
 
 import com.mamags.mamag.interfaces.IView;
+import com.mamags.mamag.model.Responses.MealTypeListResponse;
 import com.mamags.mamag.model.Responses.MenuListResponse;
 
 /**
@@ -10,5 +11,6 @@ import com.mamags.mamag.model.Responses.MenuListResponse;
 public interface MenuView extends IView {
 
     void loadMenuResults(MenuListResponse menuListResponse);
+
 
 }

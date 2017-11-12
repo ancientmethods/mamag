@@ -1,23 +1,24 @@
 package com.mamags.mamag.ui;
 
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.text.TextUtils;
 
 import com.mamags.mamag.BaseActivity;
 import com.mamags.mamag.MyApplication;
 import com.mamags.mamag.R;
-import com.mamags.mamag.Utils.DisplayUtils;
 import com.mamags.mamag.constants.RequestAction;
+import com.mamags.mamag.databinding.ActivityCreateMealtypeBinding;
 import com.mamags.mamag.databinding.ActivityCreateMenuBinding;
+import com.mamags.mamag.model.MealType;
 import com.mamags.mamag.model.Menu;
-import com.mamags.mamag.model.Requests.MenuRequest;
-import com.mamags.mamag.model.Responses.FDSresponse;
+import com.mamags.mamag.model.Requests.MealTypeRequest;
 import com.mamags.mamag.viewmodel.CreateMenuViewModel;
 
-public class CreateMenuActivity extends BaseActivity<ActivityCreateMenuBinding,CreateMenuViewModel>  {
+/**
+ * Created by samer on 11/11/2017.
+ */
 
-
+public class CreateMealTypeActivity extends BaseActivity<ActivityCreateMealtypeBinding,CreateMenuViewModel> {
 
 
     @Override
@@ -25,12 +26,12 @@ public class CreateMenuActivity extends BaseActivity<ActivityCreateMenuBinding,C
         super.onCreate(savedInstanceState);
         MyApplication.getComponent().inject(this);
 
-        bindView(R.layout.activity_create_menu);
+        bindView(R.layout.activity_create_mealtype);
         viewModel = new CreateMenuViewModel(getApplication(),restAPI);
         viewModel.attach(this);
 
         //setSupportActionBar(binding.toolbar);
-        binding.toolbar.setTitle("New Menu");
+        binding.toolbar.setTitle("New Meal Type");
         binding.toolbar.inflateMenu(R.menu.generic_save);
         binding.toolbar.setOnMenuItemClickListener(menuitem-> validate());
 
@@ -40,22 +41,21 @@ public class CreateMenuActivity extends BaseActivity<ActivityCreateMenuBinding,C
     boolean validate(){
         boolean isValid=false;
 
-        if(TextUtils.isEmpty(binding.menuName.getEditText().getText().toString())){
-            binding.menuName.setError("Name field is required");
+        if(TextUtils.isEmpty(binding.mealtypeDescription.getEditText().getText().toString())){
+            binding.mealtypeDescription.setError("Description field is required");
             return  isValid;
         }
         else{
             isValid = true;
 
-            MenuRequest menuAddRequest = new MenuRequest();
-            Menu menu = new Menu();
-            menu.setName(binding.menuName.getEditText().getText().toString().trim());
-            menu.setDescription(binding.menuDescription.getEditText().getText().toString().trim());
+            MealTypeRequest mealTypeRequest = new MealTypeRequest();
+            MealType mealType = new MealType();
+            mealType.setDescription(binding.mealtypeDescription.getEditText().getText().toString().trim());
 
-            menuAddRequest.CrudOption = RequestAction.Add.getValue();
-            menuAddRequest.setMenu(menu);
+            mealTypeRequest.CrudOption = RequestAction.Add.getValue();
+            mealTypeRequest.setMealType(mealType);
 
-            viewModel.createMenu(menuAddRequest);
+            viewModel.createMealTypeDisposable(mealTypeRequest);
         }
 
         return  isValid;

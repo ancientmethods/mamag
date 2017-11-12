@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.mamags.mamag.Utils.DisplayUtils;
 import com.mamags.mamag.api.RestAPI;
 import com.mamags.mamag.interfaces.IView;
+import com.mamags.mamag.model.Responses.FDSresponse;
 
 import javax.inject.Inject;
 
@@ -68,5 +69,18 @@ public abstract class BaseFragment<B extends ViewDataBinding, T extends BaseView
 
     @Override public void error(String message) {
         DisplayUtils.displaySnackbar(binding.getRoot(),message,Snackbar.LENGTH_LONG,ctx);
+    }
+
+    @Override
+    public void processStandardResponse(FDSresponse fdSresponse, boolean shouldClose) {
+
+
+        if (fdSresponse.getResponseCode() == 1) {
+            DisplayUtils.displaySnackbar(binding.getRoot(), "Successful response", Snackbar.LENGTH_SHORT, ctx);
+        } else {
+            DisplayUtils.displaySnackbar(binding.getRoot(), "Error in response from server", Snackbar.LENGTH_SHORT, ctx);
+        }
+
+
     }
 }

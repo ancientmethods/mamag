@@ -1,9 +1,11 @@
 package com.mamags.mamag.api;
 
 import com.mamags.mamag.model.FDSRequest;
+import com.mamags.mamag.model.Requests.MealTypeRequest;
+import com.mamags.mamag.model.Requests.MenuRequest;
 import com.mamags.mamag.model.Responses.FDSresponse;
 import com.mamags.mamag.model.Menu;
-import com.mamags.mamag.model.MenuRequest;
+import com.mamags.mamag.model.Responses.MealTypeListResponse;
 import com.mamags.mamag.model.Responses.MenuListResponse;
 
 import java.util.List;
@@ -35,6 +37,11 @@ public interface RestAPI {
     @POST("processMenuItem")
     Single<FDSresponse> createMenu (@Body MenuRequest menuRequest);
 
+    @POST("getMealTypes")
+    Single<MealTypeListResponse> getMealTypes(@Body MealTypeRequest mealTypeRequest);
+
+    @POST("processMealType")
+    Single<FDSresponse> createMealType(@Body MealTypeRequest mealTypeRequest);
 
     //
     // to use with tokens later guildwars

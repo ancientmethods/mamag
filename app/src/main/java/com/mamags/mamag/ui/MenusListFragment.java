@@ -1,10 +1,12 @@
 package com.mamags.mamag.ui;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -38,22 +40,26 @@ import java.util.List;
  * <p>You activity (or fragment) needs to implement {@link MenusListFragment.Listener}.</p>
  */
 
-public class MenusListFragment extends BaseFragment<FragmentMenuListBinding,MenuViewModel> implements MenuView {
+public class MenusListFragment extends BaseFragment<FragmentMenuListBinding, MenuViewModel> implements MenuView {
 
     // TODO: Customize parameter argument names
     private static final String ARG_ITEM_COUNT = "item_count";
 
+    Listener listener;
 
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
 
-    // TODO: Customize parameters
-    public static MenusListFragment newInstance(int itemCount) {
-        final MenusListFragment fragment = new MenusListFragment();
-        final Bundle args = new Bundle();
-        args.putInt(ARG_ITEM_COUNT, itemCount);
 
-        return fragment;
+        if (context instanceof Listener){
+            listener=(Listener) context;
+        }
     }
+
+
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -61,7 +67,7 @@ public class MenusListFragment extends BaseFragment<FragmentMenuListBinding,Menu
 
         MyApplication.getComponent().inject(this);
 
-        viewModel = new MenuViewModel(ctx.getApplication(),restAPI);
+        viewModel = new MenuViewModel(ctx.getApplication(), restAPI);
         viewModel.attach(this);
 
 
@@ -78,8 +84,8 @@ public class MenusListFragment extends BaseFragment<FragmentMenuListBinding,Menu
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-       bindView(inflater,R.layout.fragment_menu_list,container);
-       return binding.getRoot();
+        bindView(inflater, R.layout.fragment_menu_list, container);
+        return binding.getRoot();
     }
 
     @Override
@@ -95,11 +101,12 @@ public class MenusListFragment extends BaseFragment<FragmentMenuListBinding,Menu
         binding.setRecyclerViewVisibility(true);
         viewModel.getMenuList(request);
 
-        binding.newMeal.setOnClickListener(v -> startActivity(new Intent(ctx,CreateMenuActivity.class)));
+        binding.newMenu.setOnClickListener(v -> startActivity(new Intent(ctx, CreateMenuActivity.class)));
+        binding.newMeal.setOnClickListener(v -> startActivity(new Intent(ctx, CreateMenuActivity.class)));
+        binding.viewMealTypes.setOnClickListener(v -> listener.onMenuClicked(1));
+        binding.newMealType.setOnClickListener(v -> startActivity(new Intent(ctx, CreateMealTypeActivity.class)));
+
     }
-
-
-
 
 
     @Override
@@ -108,10 +115,9 @@ public class MenusListFragment extends BaseFragment<FragmentMenuListBinding,Menu
         binding.swiperefresh.setRefreshing(false);
         binding.setRecyclerViewVisibility(true);
         binding.list.setAdapter(new MenuAdapter(menuListResponse.getMenuList()));
-        DisplayUtils.displaySnackbar(binding.getRoot(),String.valueOf(menuListResponse.getResponseCode()), Snackbar.LENGTH_LONG,ctx);
+        DisplayUtils.displaySnackbar(binding.getRoot(), String.valueOf(menuListResponse.getResponseCode()), Snackbar.LENGTH_LONG, ctx);
 
     }
-
 
 
     @Override
@@ -133,7 +139,8 @@ public class MenusListFragment extends BaseFragment<FragmentMenuListBinding,Menu
             super(inflater.inflate(R.layout.fragment_menu_list_item, parent, false));
             text = itemView.findViewById(R.id.text);
 
-            text.setOnClickListener(v ->{});
+            text.setOnClickListener(v -> {
+            });
         }
 
     }
@@ -168,9 +175,9 @@ public class MenusListFragment extends BaseFragment<FragmentMenuListBinding,Menu
         binding.swiperefresh.setOnRefreshListener(() -> {
             FDSRequest request = new FDSRequest();
             request.CrudOption = RequestAction.list.getValue();
-            viewModel.getMenuList(request);});
+            viewModel.getMenuList(request);
+        });
     }
-
 
 
 }

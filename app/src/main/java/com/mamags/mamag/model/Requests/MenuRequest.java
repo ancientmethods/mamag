@@ -1,6 +1,8 @@
-package com.mamags.mamag.model;
+package com.mamags.mamag.model.Requests;
 
 import com.google.gson.annotations.SerializedName;
+import com.mamags.mamag.model.FDSRequest;
+import com.mamags.mamag.model.Menu;
 
 /**
  * Created by Samer on 18/10/2017.

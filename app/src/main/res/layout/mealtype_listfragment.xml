@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <import type="android.view.View"/>
+
+
+        <variable
+            name="recyclerViewVisibility"
+            type="Boolean"></variable>
+    </data>
+
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+
+        >
+        <android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/swiperefresh"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clipToPadding="false"
+                android:paddingBottom="@dimen/list_item_spacing_half"
+                android:paddingTop="@dimen/list_item_spacing_half"
+                android:visibility="@{recyclerViewVisibility ? View.VISIBLE : View.GONE}"
+                tools:context="com.mamags.mamag.ui.MenusListFragment"
+                tools:listitem="@layout/fragment_menu_list_item" />
+
+
+        </android.support.v4.widget.SwipeRefreshLayout>
+
+
+
+        <TextView
+            android:id="@+id/empty_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="no data available"
+            android:visibility="@{recyclerViewVisibility ? View.GONE : View.VISIBLE}" />
+
+    </RelativeLayout>
+</layout>

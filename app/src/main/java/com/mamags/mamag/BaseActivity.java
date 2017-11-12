@@ -2,11 +2,14 @@ package com.mamags.mamag;
 
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
+import com.mamags.mamag.Utils.DisplayUtils;
 import com.mamags.mamag.api.RestAPI;
 import com.mamags.mamag.interfaces.IView;
+import com.mamags.mamag.model.Responses.FDSresponse;
 
 import javax.inject.Inject;
 
@@ -20,7 +23,7 @@ import javax.inject.Inject;
 public abstract class BaseActivity<B extends ViewDataBinding, T extends BaseViewModel> extends AppCompatActivity implements IView {
 
     protected T viewModel;
-     public B binding;
+    public B binding;
 
     @Inject
     public RestAPI restAPI;
@@ -28,6 +31,7 @@ public abstract class BaseActivity<B extends ViewDataBinding, T extends BaseView
 
     /**
      * ViewModel must be initialized before bindView() is called
+     *
      * @param layout layout for the activity
      */
     protected final void bindView(int layout) {
@@ -37,30 +41,49 @@ public abstract class BaseActivity<B extends ViewDataBinding, T extends BaseView
         binding = DataBindingUtil.setContentView(this, layout);
     }
 
-    @Override protected void onStop() {
+    @Override
+    protected void onStop() {
         super.onStop();
-        if(viewModel!=null) {
+        if (viewModel != null) {
             viewModel.clearSubscriptions();
         }
     }
 
-    @Override protected void onDestroy() {
+    @Override
+    protected void onDestroy() {
         super.onDestroy();
-        if(viewModel!=null) {
+        if (viewModel != null) {
             viewModel.detach();
         }
     }
 
-    @Override public void error(Throwable e) {
+    @Override
+    public void error(Throwable e) {
         Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
     }
 
-    @Override public void error(String message) {
+    @Override
+    public void error(String message) {
         Toast.makeText(this, "Error", Toast.LENGTH_LONG).show();
     }
 
     @Override
     public void showNoDataView() {
+
+    }
+
+    @Override
+    public void processStandardResponse(FDSresponse fdSresponse, boolean shouldClose) {
+
+
+        if (fdSresponse.getResponseCode() == 1) {
+            DisplayUtils.displaySnackbar(binding.getRoot(), "Successful response", Snackbar.LENGTH_SHORT, this);
+        } else {
+            DisplayUtils.displaySnackbar(binding.getRoot(), "Error in response from server", Snackbar.LENGTH_SHORT, this);
+        }
+        if (shouldClose) {
+            finish();
+        }
 
     }
 }
