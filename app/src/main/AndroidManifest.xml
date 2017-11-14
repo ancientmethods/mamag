@@ -21,9 +21,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.CreateMenuActivity"></activity>
-        <activity android:name=".ui.CreateMealTypeActivity"></activity>
-
+        <activity android:name=".ui.CreateMenuActivity" />
+        <activity android:name=".ui.CreateMealTypeActivity" />
+        <activity android:name=".ui.CreateMealActivity"></activity>
     </application>
 
 </manifest>

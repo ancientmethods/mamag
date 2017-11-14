@@ -4,6 +4,7 @@ import com.mamags.mamag.BaseViewModel;
 import com.mamags.mamag.di.module.ApiModule;
 import com.mamags.mamag.di.module.AppModule;
 import com.mamags.mamag.di.module.NetworkModule;
+import com.mamags.mamag.ui.CreateMealActivity;
 import com.mamags.mamag.ui.CreateMealTypeActivity;
 import com.mamags.mamag.ui.CreateMenuActivity;
 import com.mamags.mamag.ui.MainActivity;
@@ -29,6 +30,7 @@ public interface AppComponent {
     void inject(MealTypeListFragment fragment);
     void inject(CreateMenuActivity activity);
     void inject(CreateMealTypeActivity activity);
+    void inject(CreateMealActivity activity);
 
 
 

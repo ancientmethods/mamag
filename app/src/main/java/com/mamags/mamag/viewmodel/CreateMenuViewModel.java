@@ -4,6 +4,7 @@ import android.app.Application;
 
 import com.mamags.mamag.BaseViewModel;
 import com.mamags.mamag.api.RestAPI;
+import com.mamags.mamag.model.Requests.MealRequest;
 import com.mamags.mamag.model.Requests.MealTypeRequest;
 import com.mamags.mamag.model.Requests.MenuRequest;
 
@@ -20,6 +21,7 @@ public class CreateMenuViewModel extends BaseViewModel {
     RestAPI restAPI;
     Disposable createMenuDisposable;
     Disposable createMealTypeDisposable;
+    Disposable createMealDisposable;
 
     public CreateMenuViewModel(Application application, RestAPI restAPI) {
         super(application);
@@ -56,5 +58,21 @@ public class CreateMenuViewModel extends BaseViewModel {
 
 
         compositeDisposable.add(createMealTypeDisposable);
+    }
+
+    public void createMealDisposable(MealRequest mealRequest) {
+
+        if (createMealDisposable != null) {
+            createMealDisposable.dispose();
+        }
+        createMealDisposable = restAPI.createMeal(mealRequest)
+                .subscribeOn(Schedulers.computation())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(fdSresponse -> Iview.processStandardResponse(fdSresponse,true),
+                        throwable -> Iview.error("Error creating meal type "))
+        ;
+
+
+        compositeDisposable.add(createMealDisposable);
     }
 }
