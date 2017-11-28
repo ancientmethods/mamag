@@ -1,8 +1,12 @@
 package com.mamags.mamag.ui;
 
+
+import android.app.ProgressDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.View;
+import android.widget.ProgressBar;
 
 import com.mamags.mamag.BaseActivity;
 import com.mamags.mamag.MyApplication;
@@ -10,12 +14,17 @@ import com.mamags.mamag.R;
 import com.mamags.mamag.constants.RequestAction;
 import com.mamags.mamag.databinding.ActivityCreateMealBinding;
 import com.mamags.mamag.databinding.ActivityCreateMealtypeBinding;
+import com.mamags.mamag.interfaces.MealTypeView;
 import com.mamags.mamag.model.MealInfo;
+import com.mamags.mamag.model.MealType;
 import com.mamags.mamag.model.Requests.MealRequest;
 import com.mamags.mamag.model.Requests.MealTypeRequest;
+import com.mamags.mamag.model.Responses.MealTypeListResponse;
 import com.mamags.mamag.viewmodel.CreateMenuViewModel;
+import com.mamags.mamag.viewmodel.MealTypeViewModel;
 
-public class CreateMealActivity extends BaseActivity<ActivityCreateMealBinding,CreateMenuViewModel> {
+public class CreateMealActivity extends BaseActivity<ActivityCreateMealBinding,CreateMenuViewModel> implements MealTypeView {
+
 
 
     @Override
@@ -31,6 +40,16 @@ public class CreateMealActivity extends BaseActivity<ActivityCreateMealBinding,C
         binding.toolbar.setTitle("New Meal");
         binding.toolbar.inflateMenu(R.menu.generic_save);
         binding.toolbar.setOnMenuItemClickListener(menuitem-> validate());
+
+        binding.group.setVisibility(View.GONE);
+
+        //get the meal types available
+        MealTypeRequest request = new MealTypeRequest();
+        request.CrudOption = RequestAction.list.getValue();
+
+
+        MealTypeViewModel mealTypeViewModel =  new MealTypeViewModel(getApplication(),restAPI);
+        mealTypeViewModel.getMealTypeList(request);
 
 
     }
@@ -58,5 +77,17 @@ public class CreateMealActivity extends BaseActivity<ActivityCreateMealBinding,C
         }
 
         return  isValid;
+    }
+
+    @Override
+    public void loadMealTypeResults(MealTypeListResponse menuListResponse) {
+        //add it to the spinner
+        if(menuListResponse.getMealTypeList()!=null){
+
+            binding.progressbar.setVisibility(View.GONE);
+
+
+            //binding.spinner.setAdapter(new MealTypeListFragment.MealTypeAdapter(mealTypeListResponse.getMealTypeList()));
+        }
     }
 }
