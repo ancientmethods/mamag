@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.mamags.mamag.BaseFragment;
+import com.mamags.mamag.MealTypeAdapter;
 import com.mamags.mamag.MyApplication;
 import com.mamags.mamag.R;
 import com.mamags.mamag.Utils.DisplayUtils;
@@ -98,44 +99,9 @@ public class MealTypeListFragment extends BaseFragment<MealtypeListfragmentBindi
     }
 
 
-    private class ViewHolder extends RecyclerView.ViewHolder {
 
-        final TextView text;
 
-        ViewHolder(LayoutInflater inflater, ViewGroup parent) {
-            // TODO: Customize the item layout
-            super(inflater.inflate(R.layout.fragment_menu_list_item, parent, false));
-            text = itemView.findViewById(R.id.text);
 
-            text.setOnClickListener(v ->{});
-        }
-
-    }
-
-    private class MealTypeAdapter extends RecyclerView.Adapter<MealTypeListFragment.ViewHolder> {
-
-        private List<MealType> mealTypes;
-
-        MealTypeAdapter(List<MealType> menuList) {
-            this.mealTypes = menuList;
-        }
-
-        @Override
-        public MealTypeListFragment.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            return new MealTypeListFragment.ViewHolder(LayoutInflater.from(parent.getContext()), parent);
-        }
-
-        @Override
-        public void onBindViewHolder(MealTypeListFragment.ViewHolder holder, int position) {
-            holder.text.setText(mealTypes.get(position).getDescription());
-        }
-
-        @Override
-        public int getItemCount() {
-            return mealTypes.size();
-        }
-
-    }
 
     private void setupRefreshLayout() {
 

@@ -6,9 +6,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.ProgressBar;
+import android.widget.SpinnerAdapter;
 
 import com.mamags.mamag.BaseActivity;
+import com.mamags.mamag.MealTypeAdapter;
 import com.mamags.mamag.MyApplication;
 import com.mamags.mamag.R;
 import com.mamags.mamag.constants.RequestAction;
@@ -23,9 +26,12 @@ import com.mamags.mamag.model.Responses.MealTypeListResponse;
 import com.mamags.mamag.viewmodel.CreateMenuViewModel;
 import com.mamags.mamag.viewmodel.MealTypeViewModel;
 
+import java.util.List;
+
 public class CreateMealActivity extends BaseActivity<ActivityCreateMealBinding,CreateMenuViewModel> implements MealTypeView {
 
 
+    MealTypeViewModel mealTypeViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +54,8 @@ public class CreateMealActivity extends BaseActivity<ActivityCreateMealBinding,C
         request.CrudOption = RequestAction.list.getValue();
 
 
-        MealTypeViewModel mealTypeViewModel =  new MealTypeViewModel(getApplication(),restAPI);
+        mealTypeViewModel =  new MealTypeViewModel(getApplication(),restAPI);
+        mealTypeViewModel.attach(this);
         mealTypeViewModel.getMealTypeList(request);
 
 
@@ -80,14 +87,19 @@ public class CreateMealActivity extends BaseActivity<ActivityCreateMealBinding,C
     }
 
     @Override
-    public void loadMealTypeResults(MealTypeListResponse menuListResponse) {
+    public void loadMealTypeResults(MealTypeListResponse mealTypeListResponse) {
         //add it to the spinner
-        if(menuListResponse.getMealTypeList()!=null){
-
+        if(mealTypeListResponse.getMealTypeList()!=null){
+            binding.group.setVisibility(View.VISIBLE);
             binding.progressbar.setVisibility(View.GONE);
 
+            ArrayAdapter arrayAdapter = new ArrayAdapter(this,android.R.layout.simple_spinner_item);
+            for (MealType mealType: mealTypeListResponse.getMealTypeList()){
+                arrayAdapter.add(mealType.getDescription());
+            }
+            arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-            //binding.spinner.setAdapter(new MealTypeListFragment.MealTypeAdapter(mealTypeListResponse.getMealTypeList()));
+            binding.spinner.setAdapter(arrayAdapter);
         }
     }
 }
