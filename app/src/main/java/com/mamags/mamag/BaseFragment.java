@@ -68,7 +68,7 @@ public abstract class BaseFragment<B extends ViewDataBinding, T extends BaseView
     }
 
     @Override public void error(String message) {
-        DisplayUtils.displaySnackbar(binding.getRoot(),message,Snackbar.LENGTH_LONG,ctx);
+        DisplayUtils.displaySnackbar(binding.getRoot(),message,Snackbar.LENGTH_SHORT,ctx);
     }
 
     @Override

@@ -1,8 +1,14 @@
 <resources>
     <string name="app_name">mamag</string>
+    <string name="title_main">MamaG Admin</string>
+
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="menus">Menus</string>
+    <string name="menu_meals">Meals</string>
+    <string name="menu_meal_types">Meal Types</string>
+    <string name="menu_ingredients">Ingredients</string>
+
     <string name="orders">Orders</string>
 
     <string name="title_notifications">Notifications</string>

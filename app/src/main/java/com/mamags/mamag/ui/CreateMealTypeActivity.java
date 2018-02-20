@@ -56,6 +56,7 @@ public class CreateMealTypeActivity extends BaseActivity<ActivityCreateMealtypeB
             mealTypeRequest.setMealType(mealType);
 
             viewModel.createMealTypeDisposable(mealTypeRequest);
+            finish();
         }
 
         return  isValid;

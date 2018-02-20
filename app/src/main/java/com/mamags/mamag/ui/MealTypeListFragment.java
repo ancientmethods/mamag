@@ -72,7 +72,7 @@ public class MealTypeListFragment extends BaseFragment<MealtypeListfragmentBindi
 
         binding.setRecyclerViewVisibility(true);
         viewModel.getMealTypeList(request);
-
+        binding.newMealType.setOnClickListener(v -> startActivity(new Intent(ctx, CreateMealTypeActivity.class)));
 
     }
 
@@ -86,7 +86,7 @@ public class MealTypeListFragment extends BaseFragment<MealtypeListfragmentBindi
         binding.swiperefresh.setRefreshing(false);
         binding.setRecyclerViewVisibility(true);
         binding.list.setAdapter(new MealTypeAdapter(mealTypeListResponse.getMealTypeList()));
-        DisplayUtils.displaySnackbar(binding.getRoot(),String.valueOf(mealTypeListResponse.getResponseCode()), Snackbar.LENGTH_LONG,ctx);
+        //DisplayUtils.displaySnackbar(binding.getRoot(),String.valueOf(mealTypeListResponse.getResponseCode()), Snackbar.LENGTH_SHORT,ctx);
 
     }
 

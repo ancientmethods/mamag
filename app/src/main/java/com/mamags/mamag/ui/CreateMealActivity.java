@@ -42,7 +42,6 @@ public class CreateMealActivity extends BaseActivity<ActivityCreateMealBinding,C
         viewModel = new CreateMenuViewModel(getApplication(),restAPI);
         viewModel.attach(this);
 
-        //setSupportActionBar(binding.toolbar);
         binding.toolbar.setTitle("New Meal");
         binding.toolbar.inflateMenu(R.menu.generic_save);
         binding.toolbar.setOnMenuItemClickListener(menuitem-> validate());

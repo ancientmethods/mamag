@@ -6,4 +6,66 @@
     <color name="white">#FFFFFF</color>
     <color name="black_semi_transparent">#B2000000</color>
 
+    <color name="red_error">#B16E68</color>
+    <color name="grey_light">#ffe0e0e0</color>
+    <color name="grey_lighter">#f4f4f4</color>
+    <color name="sheet_back">#fdfeff</color>
+
+    <color name="default_blue_darker">#2e678e</color>
+    <color name="default_purple_pressed">#9E98C4</color>
+    <color name="default_blue_lighter">#EAF2F7</color>
+
+    <color name="default_purple">#746ca6</color>
+    <color name="default_blue_nav">#3883c1</color>
+    <color name="default_orange">#EA9B70</color>
+    <color name="default_orange_opac">#59ea9b70</color>
+
+
+
+    <color name="default_green">#1D8C5E</color>
+
+    <color name="divider_grey">#D6DADD</color>
+    <color name="black_opac">#363434</color>
+
+    /***The color below is used for all text**/
+    <color name="grey_text">#333333</color>
+    <color name="text_secondary">#6b6f71</color>
+    §
+
+    <color name="White">#FFFFFF</color>
+    <color name="dark_gray">#333333</color>
+    <color name="green">#60A369</color>
+    <color name="calendar_main_color">#fff9f9f9</color>
+    <color name="lightblue">#9ccccb</color>
+    <color name="paleblue">#70b2b1</color>
+    <color name="lighterblue">#7372e0</color>
+    <color name="trueblue">#5377cc</color>
+    <color name="darkpurple">#9494b9</color>
+    <color name="lightestpink">#ffe1f8</color>
+    <color name="pink">#ffcdf4</color>
+    <color name="palepurple">#ceb0c8</color>
+    <color name="purple">#b282a8</color>
+    <color name="lightyellow">#fff5a3</color>
+    <color name="yellow">#fff07c</color>
+    <color name="darkyellow">#ffe521</color>
+    <color name="lightestorange">#ffc99f</color>
+    <color name="lightorange">#ffa560</color>
+    <color name="darkorange">#ff8860</color>
+    <color name="red">#d25656</color>
+    <color name="darkpink">#d38585</color>
+    <color name="lightbrown">#cdaa9e</color>
+    <color name="brown">#ac725e</color>
+    <color name="lightgreen">#8bff88</color>
+    <color name="mediumgreen">#60A369</color>
+    <color name="darkgreen">#4bbd42</color>
+    <color name="sludgegreen">#90b48d</color>
+    <color name="grey">#cccccc</color>
+    <color name="ripplecolor">#cccccc</color>
+
+    <color name="greymedium">#b2b2b2</color>
+    <color name="navicons">#646464</color>
+    <color name="navheaderbackground">#EEEEEE</color>
+
+    <color name="transparent">#00000000</color>
+
 </resources>

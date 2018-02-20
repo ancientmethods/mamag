@@ -103,8 +103,6 @@ public class MenusListFragment extends BaseFragment<FragmentMenuListBinding, Men
 
         binding.newMenu.setOnClickListener(v -> startActivity(new Intent(ctx, CreateMenuActivity.class)));
         binding.newMeal.setOnClickListener(v -> startActivity(new Intent(ctx, CreateMealActivity.class)));
-        binding.viewMealTypes.setOnClickListener(v -> listener.onMenuClicked(1));
-        binding.newMealType.setOnClickListener(v -> startActivity(new Intent(ctx, CreateMealTypeActivity.class)));
 
     }
 
@@ -115,7 +113,7 @@ public class MenusListFragment extends BaseFragment<FragmentMenuListBinding, Men
         binding.swiperefresh.setRefreshing(false);
         binding.setRecyclerViewVisibility(true);
         binding.list.setAdapter(new MenuAdapter(menuListResponse.getMenuList()));
-        DisplayUtils.displaySnackbar(binding.getRoot(), String.valueOf(menuListResponse.getResponseCode()), Snackbar.LENGTH_LONG, ctx);
+        //DisplayUtils.displaySnackbar(binding.getRoot(), String.valueOf(menuListResponse.getResponseCode()), Snackbar.LENGTH_SHORT, ctx);
 
     }
 
