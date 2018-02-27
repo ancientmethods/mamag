@@ -73,8 +73,8 @@ public class CreateMealActivity extends BaseActivity<ActivityCreateMealBinding,C
             MealRequest createMealRequest = new MealRequest();
             MealInfo mealInfo = new MealInfo();
             mealInfo.setDescription(binding.mealDescription.getEditText().getText().toString().trim());
-            mealInfo.setPrice(Float.valueOf(binding.mealDescription.getEditText().getText().toString().trim()));
-
+            mealInfo.setPrice(Float.valueOf(binding.mealPrice.getEditText().getText().toString().trim()));
+            mealInfo.setCustomisable(binding.switchCustom.getShowText());
 
             createMealRequest.CrudOption = RequestAction.Add.getValue();
             createMealRequest.setMealInfo(mealInfo);

@@ -16,6 +16,11 @@ public class MealInfo {
     @SerializedName("Price")
     private float price;
 
+
+
+    @SerializedName("isCustomisable")
+    private boolean isCustomisable;
+
     @SerializedName("MealTypeId")
 
     private int mealTypeId;
@@ -53,7 +58,13 @@ public class MealInfo {
     public void setPrice(float price) {
         this.price = price;
     }
+    public boolean isCustomisable() {
+        return isCustomisable;
+    }
 
+    public void setCustomisable(boolean customisable) {
+        isCustomisable = customisable;
+    }
     public int getMealTypeId() {
         return mealTypeId;
     }

@@ -69,7 +69,7 @@ public class CreateMenuViewModel extends BaseViewModel {
                 .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(fdSresponse -> Iview.processStandardResponse(fdSresponse,true),
-                        throwable -> Iview.error("Error creating meal type "))
+                        throwable -> Iview.error("Error creating meal "))
         ;
 
 

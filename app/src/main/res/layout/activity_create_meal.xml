@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    >
 
     <LinearLayout
-    android:orientation="vertical"
-        xmlns:android="http://schemas.android.com/apk/res/android"
-
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
-            style="@style/toolbarStyle"
-            />
+            style="@style/toolbarStyle" />
 
         <ProgressBar
             android:id="@+id/progressbar"
@@ -24,70 +23,77 @@
             android:backgroundTint="@color/white"
             android:indeterminate="true"
             android:indeterminateTint="#1a09d6"
-            android:max="100"
-          />
+            android:max="100" />
 
-    <LinearLayout
-        android:orientation="vertical"
-        android:id="@+id/group"
-        android:layout_marginLeft="@dimen/material_design_left_margin"
+        <LinearLayout
+            android:id="@+id/group"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
 
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+            android:layout_marginLeft="@dimen/material_design_left_margin"
+            android:orientation="vertical">
 
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/mealName"
-            android:layout_marginTop="@dimen/material_design_left_margin"
-            android:layout_width="260dp"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-       >
-
-            <android.support.design.widget.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="46dp"
-                android:baselineAligned="false"
-                android:hint="Name *" />
-        </android.support.design.widget.TextInputLayout>
-
-
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/mealDescription"
-            android:layout_width="260dp"
-
-
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-        >
-
-            <android.support.design.widget.TextInputEditText
-                android:layout_width="match_parent"
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/mealName"
+                android:layout_width="260dp"
                 android:layout_height="wrap_content"
-                android:hint="Description" />
-        </android.support.design.widget.TextInputLayout>
+                android:layout_marginTop="@dimen/material_design_left_margin"
+                android:orientation="vertical">
 
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/mealPrice"
-            android:layout_width="260dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-         >
+                <android.support.design.widget.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="46dp"
+                    android:baselineAligned="false"
+                    android:hint="Name *" />
+            </android.support.design.widget.TextInputLayout>
 
-            <android.support.design.widget.TextInputEditText
-                android:layout_width="match_parent"
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/mealDescription"
+                android:layout_width="260dp"
+
+
                 android:layout_height="wrap_content"
-                android:hint="Price"
+                android:layout_marginTop="8dp">
 
-                android:inputType="numberDecimal" />
-        </android.support.design.widget.TextInputLayout>
+                <android.support.design.widget.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Description" />
+            </android.support.design.widget.TextInputLayout>
 
-        <Spinner
-            android:id="@+id/spinner"
-            android:layout_marginTop="@dimen/material_design_left_margin"
-            android:layout_width="260dp"
-            android:layout_height="wrap_content"
-       />
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/mealPrice"
+                android:layout_width="260dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp">
+
+                <android.support.design.widget.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Price"
+
+                    android:inputType="numberDecimal" />
+            </android.support.design.widget.TextInputLayout>
+
+            <Spinner
+                android:id="@+id/spinner"
+                android:layout_width="260dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/material_design_left_margin" />
+
+
+            <Switch
+                android:id="@+id/switch_custom"
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/material_design_left_margin"
+                android:switchPadding="10dp"
+
+                android:text="Customisable" />
+
+        </LinearLayout>
+
     </LinearLayout>
-
-</LinearLayout>
 </layout>
