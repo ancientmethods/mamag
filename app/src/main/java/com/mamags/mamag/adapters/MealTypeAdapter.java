@@ -1,12 +1,12 @@
-package com.mamags.mamag;
+package com.mamags.mamag.adapters;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.mamags.mamag.R;
 import com.mamags.mamag.model.MealType;
-import com.mamags.mamag.ui.MealTypeListFragment;
 
 import java.util.List;
 

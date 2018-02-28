@@ -1,22 +1,16 @@
 package com.mamags.mamag.ui;
 
 
-import android.app.ProgressDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.ProgressBar;
-import android.widget.SpinnerAdapter;
 
 import com.mamags.mamag.BaseActivity;
-import com.mamags.mamag.MealTypeAdapter;
 import com.mamags.mamag.MyApplication;
 import com.mamags.mamag.R;
 import com.mamags.mamag.constants.RequestAction;
 import com.mamags.mamag.databinding.ActivityCreateMealBinding;
-import com.mamags.mamag.databinding.ActivityCreateMealtypeBinding;
 import com.mamags.mamag.interfaces.MealTypeView;
 import com.mamags.mamag.model.MealInfo;
 import com.mamags.mamag.model.MealType;
@@ -25,8 +19,6 @@ import com.mamags.mamag.model.Requests.MealTypeRequest;
 import com.mamags.mamag.model.Responses.MealTypeListResponse;
 import com.mamags.mamag.viewmodel.CreateMenuViewModel;
 import com.mamags.mamag.viewmodel.MealTypeViewModel;
-
-import java.util.List;
 
 public class CreateMealActivity extends BaseActivity<ActivityCreateMealBinding,CreateMenuViewModel> implements MealTypeView {
 

@@ -2,7 +2,6 @@ package com.mamags.mamag.ui;
 
 import android.os.Bundle;
 import android.support.design.widget.BottomSheetBehavior;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.Toolbar;
@@ -15,6 +14,7 @@ import com.mamags.mamag.MyApplication;
 import com.mamags.mamag.R;
 import com.mamags.mamag.Utils.TT_Tabs;
 import com.mamags.mamag.Utils.TabsList;
+import com.mamags.mamag.api.TabsAdapter;
 import com.mamags.mamag.databinding.ActivityMainBinding;
 import com.mamags.mamag.viewmodel.MenuViewModel;
 
