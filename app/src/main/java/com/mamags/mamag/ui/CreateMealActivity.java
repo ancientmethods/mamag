@@ -17,10 +17,10 @@ import com.mamags.mamag.model.MealType;
 import com.mamags.mamag.model.Requests.MealRequest;
 import com.mamags.mamag.model.Requests.MealTypeRequest;
 import com.mamags.mamag.model.Responses.MealTypeListResponse;
-import com.mamags.mamag.viewmodel.CreateMenuViewModel;
+import com.mamags.mamag.viewmodel.CRUDViewModel;
 import com.mamags.mamag.viewmodel.MealTypeViewModel;
 
-public class CreateMealActivity extends BaseActivity<ActivityCreateMealBinding,CreateMenuViewModel> implements MealTypeView {
+public class CreateMealActivity extends BaseActivity<ActivityCreateMealBinding,CRUDViewModel> implements MealTypeView {
 
 
     MealTypeViewModel mealTypeViewModel;
@@ -31,7 +31,7 @@ public class CreateMealActivity extends BaseActivity<ActivityCreateMealBinding,C
         MyApplication.getComponent().inject(this);
 
         bindView(R.layout.activity_create_meal);
-        viewModel = new CreateMenuViewModel(getApplication(),restAPI);
+        viewModel = new CRUDViewModel(getApplication(),restAPI);
         viewModel.attach(this);
 
         binding.toolbar.setTitle("New Meal");

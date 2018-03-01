@@ -87,6 +87,8 @@ dependencies {
     compile 'com.getbase:floatingactionbutton:1.9.0'
     compile 'eu.davidea:flexible-adapter:5.0.0-rc4'
     compile 'eu.davidea:flexible-adapter:5.0.0-SNAPSHOT'
+    compile 'eu.davidea:flexible-adapter-ui:1.0.0-b2'
+
 
 
 }

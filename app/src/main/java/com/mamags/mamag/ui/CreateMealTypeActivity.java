@@ -8,17 +8,15 @@ import com.mamags.mamag.MyApplication;
 import com.mamags.mamag.R;
 import com.mamags.mamag.constants.RequestAction;
 import com.mamags.mamag.databinding.ActivityCreateMealtypeBinding;
-import com.mamags.mamag.databinding.ActivityCreateMenuBinding;
 import com.mamags.mamag.model.MealType;
-import com.mamags.mamag.model.Menu;
 import com.mamags.mamag.model.Requests.MealTypeRequest;
-import com.mamags.mamag.viewmodel.CreateMenuViewModel;
+import com.mamags.mamag.viewmodel.CRUDViewModel;
 
 /**
  * Created by samer on 11/11/2017.
  */
 
-public class CreateMealTypeActivity extends BaseActivity<ActivityCreateMealtypeBinding,CreateMenuViewModel> {
+public class CreateMealTypeActivity extends BaseActivity<ActivityCreateMealtypeBinding,CRUDViewModel> {
 
 
     @Override
@@ -27,7 +25,7 @@ public class CreateMealTypeActivity extends BaseActivity<ActivityCreateMealtypeB
         MyApplication.getComponent().inject(this);
 
         bindView(R.layout.activity_create_mealtype);
-        viewModel = new CreateMenuViewModel(getApplication(),restAPI);
+        viewModel = new CRUDViewModel(getApplication(),restAPI);
         viewModel.attach(this);
 
         //setSupportActionBar(binding.toolbar);

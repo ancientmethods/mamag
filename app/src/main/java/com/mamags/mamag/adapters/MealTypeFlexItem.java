@@ -19,9 +19,19 @@ import eu.davidea.viewholders.FlexibleViewHolder;
 public class MealTypeFlexItem extends AbstractFlexibleItem<MealTypeFlexItem.MyViewHolder> {
 
 
+
+
     MealType mealType;
 
     public MealTypeFlexItem(MealType mealType){
+        this.mealType = mealType;
+    }
+
+    public MealType getMealType() {
+        return mealType;
+    }
+
+    public void setMealType(MealType mealType) {
         this.mealType = mealType;
     }
     @Override

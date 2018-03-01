@@ -113,7 +113,7 @@ public class MenusListFragment extends BaseFragment<FragmentMenuListBinding, Men
         binding.swiperefresh.setRefreshing(false);
         binding.setRecyclerViewVisibility(true);
         binding.list.setAdapter(new MenuAdapter(menuListResponse.getMenuList()));
-        //DisplayUtils.displaySnackbar(binding.getRoot(), String.valueOf(menuListResponse.getResponseCode()), Snackbar.LENGTH_SHORT, ctx);
+        displayUtils.displaySuccessMessage(binding.getRoot());
 
     }
 

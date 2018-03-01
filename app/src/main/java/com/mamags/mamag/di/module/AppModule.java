@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+import com.mamags.mamag.Utils.DisplayUtils;
 import com.mamags.mamag.ui.MainActivity;
 
 import javax.inject.Singleton;
@@ -36,6 +37,12 @@ public class AppModule {
     // Application reference must come from AppModule.class
     SharedPreferences providesSharedPreferences(Application application) {
         return PreferenceManager.getDefaultSharedPreferences(application);
+    }
+
+    @Provides
+    @Singleton
+    public DisplayUtils provideDisplayUtils(Application application){
+        return new DisplayUtils(application);
     }
 
 

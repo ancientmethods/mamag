@@ -42,7 +42,7 @@ public interface RestAPI {
     Single<MealTypeListResponse> getMealTypes(@Body MealTypeRequest mealTypeRequest);
 
     @POST("processMealType")
-    Single<FDSresponse> createMealType(@Body MealTypeRequest mealTypeRequest);
+    Single<FDSresponse> mealType(@Body MealTypeRequest mealTypeRequest);
 
 
     @POST("processMealInfo")

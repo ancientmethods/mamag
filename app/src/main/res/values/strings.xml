@@ -13,4 +13,10 @@
 
     <string name="title_notifications">Notifications</string>
     <string name="save">Save</string>
+    <string name="action_selected_one">Selected</string>
+    <string name="delete">Delete</string>
+    <string name="warning">Warning</string>
+    <string name="delete_mealtype_warning">This will delete all meals associated</string>
+    <string name="yes">Yes</string>
+
 </resources>

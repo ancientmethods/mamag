@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
 import com.mamags.mamag.Utils.DisplayUtils;
+import com.mamags.mamag.api.ResponseCode;
 import com.mamags.mamag.api.RestAPI;
 import com.mamags.mamag.interfaces.IView;
 import com.mamags.mamag.model.Responses.FDSresponse;
@@ -28,6 +29,8 @@ public abstract class BaseActivity<B extends ViewDataBinding, T extends BaseView
     @Inject
     public RestAPI restAPI;
 
+    @Inject
+    public DisplayUtils displayUtils;
 
     /**
      * ViewModel must be initialized before bindView() is called
@@ -55,6 +58,7 @@ public abstract class BaseActivity<B extends ViewDataBinding, T extends BaseView
         if (viewModel != null) {
             viewModel.detach();
         }
+
     }
 
     @Override
@@ -64,7 +68,7 @@ public abstract class BaseActivity<B extends ViewDataBinding, T extends BaseView
 
     @Override
     public void error(String message) {
-        Toast.makeText(this, "Error", Toast.LENGTH_LONG).show();
+        displayUtils.displayErrorMessage(binding.getRoot(),message);
     }
 
     @Override
@@ -76,10 +80,10 @@ public abstract class BaseActivity<B extends ViewDataBinding, T extends BaseView
     public void processStandardResponse(FDSresponse fdSresponse, boolean shouldClose) {
 
 
-        if (fdSresponse.getResponseCode() == 1) {
-            DisplayUtils.displaySnackbar(binding.getRoot(), "Successful response", Snackbar.LENGTH_SHORT, this);
+        if (fdSresponse.getResponseCode() == ResponseCode.SUCCESS) {
+            displayUtils.displaySuccessMessage(binding.getRoot());
         } else {
-            DisplayUtils.displaySnackbar(binding.getRoot(), "Error in response from server", Snackbar.LENGTH_SHORT, this);
+            displayUtils.displayErrorMessage(binding.getRoot());
         }
         if (shouldClose) {
             finish();

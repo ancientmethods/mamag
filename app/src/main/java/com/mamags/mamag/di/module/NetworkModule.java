@@ -6,6 +6,8 @@ import com.mamags.mamag.api.AutoValueGsonFactory;
 import com.mamags.mamag.constants.MamaConstants;
 
 
+import java.util.concurrent.TimeUnit;
+
 import javax.inject.Singleton;
 
 import dagger.Module;
@@ -38,7 +40,7 @@ public class NetworkModule {
     @Provides
     @Singleton
     OkHttpClient provideOkHttpClient() {
-        return new OkHttpClient.Builder().build();
+        return new OkHttpClient.Builder().readTimeout(15, TimeUnit.SECONDS).build();
     }
 
     @Provides

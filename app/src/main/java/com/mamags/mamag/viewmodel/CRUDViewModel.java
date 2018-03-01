@@ -16,14 +16,15 @@ import io.reactivex.schedulers.Schedulers;
  * Created by Samer on 10/11/2017.
  */
 
-public class CreateMenuViewModel extends BaseViewModel {
+public class CRUDViewModel extends BaseViewModel {
     //interface object of rest api
     RestAPI restAPI;
     Disposable createMenuDisposable;
-    Disposable createMealTypeDisposable;
+    Disposable mealTypeDisposable;
     Disposable createMealDisposable;
 
-    public CreateMenuViewModel(Application application, RestAPI restAPI) {
+
+    public CRUDViewModel(Application application, RestAPI restAPI) {
         super(application);
         this.restAPI = restAPI;
     }
@@ -44,21 +45,29 @@ public class CreateMenuViewModel extends BaseViewModel {
         compositeDisposable.add(createMenuDisposable);
     }
 
+    /**
+     * called create but it can handle edit,update and add operations
+     * @param mealTypeRequest
+     */
     public void createMealTypeDisposable(MealTypeRequest mealTypeRequest) {
 
-        if (createMealTypeDisposable != null) {
-            createMealTypeDisposable.dispose();
+        if (mealTypeDisposable != null) {
+            mealTypeDisposable.dispose();
         }
-        createMealTypeDisposable = restAPI.createMealType(mealTypeRequest)
+        mealTypeDisposable = restAPI.mealType(mealTypeRequest)
                 .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(fdSresponse -> Iview.processStandardResponse(fdSresponse,true),
-                        throwable -> Iview.error("Error creating meal type "))
+                        throwable -> Iview.error("Error processing request "))
         ;
 
 
-        compositeDisposable.add(createMealTypeDisposable);
+        compositeDisposable.add(mealTypeDisposable);
     }
+
+
+
+
 
     public void createMealDisposable(MealRequest mealRequest) {
 

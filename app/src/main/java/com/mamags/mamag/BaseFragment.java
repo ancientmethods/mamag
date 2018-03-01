@@ -6,11 +6,13 @@ import android.databinding.ViewDataBinding;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.mamags.mamag.Utils.DisplayUtils;
+import com.mamags.mamag.api.ResponseCode;
 import com.mamags.mamag.api.RestAPI;
 import com.mamags.mamag.interfaces.IView;
 import com.mamags.mamag.model.Responses.FDSresponse;
@@ -25,9 +27,12 @@ public abstract class BaseFragment<B extends ViewDataBinding, T extends BaseView
 
     protected T viewModel;
     protected B binding;
-    public FragmentActivity ctx;
+    public AppCompatActivity ctx;
 
+    public String TAG = "Mamag";
     @Inject public RestAPI restAPI;
+    @Inject public DisplayUtils displayUtils;
+
 
     /**
      * ViewModel must be initialized before bindView() is called
@@ -46,7 +51,7 @@ public abstract class BaseFragment<B extends ViewDataBinding, T extends BaseView
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        ctx = (FragmentActivity)context;
+        ctx = (AppCompatActivity) context;
     }
 
 
@@ -68,17 +73,18 @@ public abstract class BaseFragment<B extends ViewDataBinding, T extends BaseView
     }
 
     @Override public void error(String message) {
-        DisplayUtils.displaySnackbar(binding.getRoot(),message,Snackbar.LENGTH_SHORT,ctx);
+        displayUtils.displayErrorMessage(binding.getRoot(),message);
     }
 
     @Override
     public void processStandardResponse(FDSresponse fdSresponse, boolean shouldClose) {
 
 
-        if (fdSresponse.getResponseCode() == 1) {
-            DisplayUtils.displaySnackbar(binding.getRoot(), "Successful response", Snackbar.LENGTH_SHORT, ctx);
+        if (fdSresponse.getResponseCode() == ResponseCode.SUCCESS) {
+            displayUtils.displayErrorMessage(binding.getRoot());
         } else {
-            DisplayUtils.displaySnackbar(binding.getRoot(), "Error in response from server", Snackbar.LENGTH_SHORT, ctx);
+            displayUtils.displayErrorMessage(binding.getRoot());
+
         }
 
 

@@ -1,21 +1,18 @@
 package com.mamags.mamag.ui;
 
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.text.TextUtils;
 
 import com.mamags.mamag.BaseActivity;
 import com.mamags.mamag.MyApplication;
 import com.mamags.mamag.R;
-import com.mamags.mamag.Utils.DisplayUtils;
 import com.mamags.mamag.constants.RequestAction;
 import com.mamags.mamag.databinding.ActivityCreateMenuBinding;
 import com.mamags.mamag.model.Menu;
 import com.mamags.mamag.model.Requests.MenuRequest;
-import com.mamags.mamag.model.Responses.FDSresponse;
-import com.mamags.mamag.viewmodel.CreateMenuViewModel;
+import com.mamags.mamag.viewmodel.CRUDViewModel;
 
-public class CreateMenuActivity extends BaseActivity<ActivityCreateMenuBinding,CreateMenuViewModel>  {
+public class CreateMenuActivity extends BaseActivity<ActivityCreateMenuBinding,CRUDViewModel>  {
 
 
 
@@ -26,7 +23,7 @@ public class CreateMenuActivity extends BaseActivity<ActivityCreateMenuBinding,C
         MyApplication.getComponent().inject(this);
 
         bindView(R.layout.activity_create_menu);
-        viewModel = new CreateMenuViewModel(getApplication(),restAPI);
+        viewModel = new CRUDViewModel(getApplication(),restAPI);
         viewModel.attach(this);
 
         //setSupportActionBar(binding.toolbar);
