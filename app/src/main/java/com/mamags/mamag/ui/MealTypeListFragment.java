@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -37,6 +38,8 @@ import java.util.List;
 
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.SelectableAdapter;
+import eu.davidea.flexibleadapter.common.FlexibleItemDecoration;
+import eu.davidea.flexibleadapter.common.SmoothScrollLinearLayoutManager;
 import eu.davidea.flexibleadapter.helpers.ActionModeHelper;
 import eu.davidea.flexibleadapter.items.IFlexible;
 
@@ -52,7 +55,7 @@ public class MealTypeListFragment extends BaseFragment<MealtypeListfragmentBindi
     private ActionModeHelper mActionModeHelper;
 
     private CRUDViewModel crudViewModel;
-
+    int mActivatedPosition;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -63,7 +66,7 @@ public class MealTypeListFragment extends BaseFragment<MealtypeListfragmentBindi
         viewModel = new MealTypeViewModel(ctx.getApplication(), restAPI);
         viewModel.attach(this);
 
-        crudViewModel= new CRUDViewModel(ctx.getApplication(), restAPI);
+        crudViewModel = new CRUDViewModel(ctx.getApplication(), restAPI);
         crudViewModel.attach(this);
 
     }
@@ -125,28 +128,27 @@ public class MealTypeListFragment extends BaseFragment<MealtypeListfragmentBindi
 
 
     void deleteItems() {
-        try{
-        List<Integer> selectedItems = adapter.getSelectedPositions();
-        for (Integer num : selectedItems) {
-            Log.d(TAG, String.valueOf(num));
-        }
+        try {
+            List<Integer> selectedItems = adapter.getSelectedPositions();
+            for (Integer num : selectedItems) {
+                Log.d(TAG, String.valueOf(num));
+            }
 
-        MealTypeFlexItem flexItem = (MealTypeFlexItem)adapter.getItem(selectedItems.get(0));
-        MealTypeRequest mealTypeRequest = new MealTypeRequest();
-        MealType mealType = new MealType();
-        mealType.setId(flexItem.getMealType().getId()) ;
+            MealTypeFlexItem flexItem = (MealTypeFlexItem) adapter.getItem(selectedItems.get(0));
+            MealTypeRequest mealTypeRequest = new MealTypeRequest();
+            MealType mealType = new MealType();
+            mealType.setId(flexItem.getMealType().getId());
 
-        //initiate delete API call
-        mealTypeRequest.CrudOption = RequestAction.Delete.getValue();
-        mealTypeRequest.setMealType(mealType);
+            //initiate delete API call
+            mealTypeRequest.CrudOption = RequestAction.Delete.getValue();
+            mealTypeRequest.setMealType(mealType);
 
 
-        crudViewModel.createMealTypeDisposable(mealTypeRequest);
-        mActionModeHelper.destroyActionModeIfCan();
-        }
-        catch (Exception ex){
+            crudViewModel.createMealTypeDisposable(mealTypeRequest);
+            mActionModeHelper.destroyActionModeIfCan();
+        } catch (Exception ex) {
             ex.printStackTrace();
-            Log.d(TAG,"error");
+            Log.d(TAG, "error");
         }
 
     }
@@ -160,12 +162,14 @@ public class MealTypeListFragment extends BaseFragment<MealtypeListfragmentBindi
         binding.setRecyclerViewVisibility(true);
     }
 
+    //process response after delete
     @Override
     public void processStandardResponse(FDSresponse fdSresponse, boolean shouldClose) {
-        if(fdSresponse.getResponseCode() == ResponseCode.SUCCESS){
+        if (fdSresponse.getResponseCode() == ResponseCode.SUCCESS) {
             displayUtils.displaySuccessMessage(binding.getRoot());
-        }
-        else{
+            adapter.removeItem(mActivatedPosition);
+            adapter.notifyDataSetChanged();
+        } else {
             showLoadedStatus();
         }
         super.processStandardResponse(fdSresponse, shouldClose);
@@ -184,8 +188,15 @@ public class MealTypeListFragment extends BaseFragment<MealtypeListfragmentBindi
         adapter.addListener(this);
         adapter.setMode(SelectableAdapter.Mode.SINGLE);
         initializeActionModeHelper(SelectableAdapter.Mode.SINGLE);
-        binding.list.setAdapter(adapter);
+        binding.list.setLayoutManager(new SmoothScrollLinearLayoutManager(ctx));
 
+        binding.list.setAdapter(adapter);
+        binding.list.setItemAnimator(new DefaultItemAnimator());
+
+        // Divider item decorator with DrawOver enabled
+        binding.list.addItemDecoration(new FlexibleItemDecoration(getActivity())
+                .withDivider(R.drawable.divider, R.layout.recycler_simple_item)
+                .withDrawOver(true));
         showLoadedStatus();
         displayUtils.displaySuccessMessage(binding.getRoot());
 
@@ -232,13 +243,29 @@ public class MealTypeListFragment extends BaseFragment<MealtypeListfragmentBindi
     @Override
     public void onItemLongClick(int position) {
 
-        Toast.makeText(ctx, String.valueOf(position), Toast.LENGTH_SHORT).show();
-        mActionModeHelper.onLongClick(ctx, position);
+        if (position != mActivatedPosition) setActivatedPosition(position);
+
+        //make sure only the currently selected item will get selected again as we are in single selection mode
+        if (adapter.getSelectedPositions().size() == 0 || adapter.getSelectedPositions().contains(position)) {
+            mActionModeHelper.onLongClick(ctx, position);
+        }
+
+
     }
 
     @Override
     public boolean onItemClick(int position) {
-        adapter.toggleSelection(position);
-        return true;
+
+        if (mActionModeHelper.getActionMode() != null) {
+            return false;
+        }
+
+        if (position != mActivatedPosition) setActivatedPosition(position);
+        return true; //Important!
+    }
+
+    private void setActivatedPosition(int position) {
+        mActivatedPosition = position;
+        //adapter.toggleSelection(position); //Important!
     }
 }

@@ -4,12 +4,14 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.mamags.mamag.R;
+import com.mamags.mamag.Utils.DisplayUtils;
 import com.mamags.mamag.model.MealType;
 
 import java.util.List;
 
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
+import eu.davidea.flipview.FlipView;
 import eu.davidea.viewholders.FlexibleViewHolder;
 
 /**
@@ -36,7 +38,7 @@ public class MealTypeFlexItem extends AbstractFlexibleItem<MealTypeFlexItem.MyVi
     }
     @Override
     public int getLayoutRes() {
-        return R.layout.fragment_menu_list_item;
+        return R.layout.recycler_simple_item;
     }
 
     @Override
@@ -55,6 +57,7 @@ public class MealTypeFlexItem extends AbstractFlexibleItem<MealTypeFlexItem.MyVi
             MealType inItem = (MealType) inObject;
             return this.mealType.getDescription().equals(inItem.getDescription());
         }
+
         return false;
     }
 
@@ -77,10 +80,29 @@ public class MealTypeFlexItem extends AbstractFlexibleItem<MealTypeFlexItem.MyVi
     public class MyViewHolder extends FlexibleViewHolder {
 
         public TextView mTitle;
+        FlipView mFlipView;
 
         public MyViewHolder(View view, FlexibleAdapter adapter) {
             super(view, adapter);
-            mTitle = itemView.findViewById(R.id.text);
+            mTitle = view.findViewById(R.id.title);
+            this.mFlipView = view.findViewById(R.id.image);
+            this.mFlipView.setOnClickListener(
+                    v ->{
+                            mAdapter.mItemLongClickListener.onItemLongClick(getAdapterPosition());
+                            toggleActivation();});
         }
+
+        @Override
+        public void toggleActivation() {
+            super.toggleActivation();
+            // Here we use a custom Animation inside the ItemView
+            mFlipView.flip(mAdapter.isSelected(getAdapterPosition()));
+        }
+        @Override
+        public float getActivationElevation() {
+            return DisplayUtils.pxFromDp(itemView.getContext(), 4f);
+        }
+
+
     }
 }

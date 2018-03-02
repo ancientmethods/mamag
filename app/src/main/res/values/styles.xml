@@ -6,8 +6,19 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <!-- Transitions settings -->
+        <item name="android:windowContentTransitions">true</item>
+        <item name="android:windowAllowEnterTransitionOverlap">true</item>
+        <item name="android:windowAllowReturnTransitionOverlap">true</item>
         <item name="windowActionModeOverlay">true</item>
 
+        <!-- For selection -->
+        <item name="selectableItemBackground">@drawable/selector_item_light</item>
+        <item name="primaryTextSelector">@drawable/primary_text_selector_light</item>
+
+        <!-- Spinner -->
+        <item name="android:spinnerStyle">@style/Spinner</item>
+        <item name="android:spinnerItemStyle">@style/SpinnerItem</item>
     </style>
 
     <style name="menu_labels_style">
@@ -25,6 +36,17 @@
         <item name="theme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
 
     </style>
+    <style name="Spinner" parent="Widget.AppCompat.Spinner">
+        <item name="android:dropDownWidth">160dp</item>
+    </style>
 
+    <style name="SpinnerItem" parent="Widget.AppCompat.TextView.SpinnerItem">
+        <item name="android:background">@drawable/selector_item_light</item>
+        <item name="android:textAppearance">@style/TextAppearanceSpinnerItem</item>
+    </style>
+
+    <style name="TextAppearanceSpinnerItem" parent="TextAppearance.AppCompat.Widget.TextView.SpinnerItem">
+        <item name="android:textColor">@color/material_text_color_purple_500</item>
+    </style>
 
 </resources>
