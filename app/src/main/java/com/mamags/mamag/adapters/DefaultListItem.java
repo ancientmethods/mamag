@@ -1,11 +1,14 @@
 package com.mamags.mamag.adapters;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.view.View;
 import android.widget.TextView;
 
 import com.mamags.mamag.R;
 import com.mamags.mamag.Utils.DisplayUtils;
 import com.mamags.mamag.model.MealType;
+import com.mamags.mamag.model.Menu;
 
 import java.util.List;
 
@@ -18,24 +21,42 @@ import eu.davidea.viewholders.FlexibleViewHolder;
  * Created by Samer on 28/02/2018.
  */
 
-public class MealTypeFlexItem extends AbstractFlexibleItem<MealTypeFlexItem.MyViewHolder> {
-
-
+public class DefaultListItem extends AbstractFlexibleItem<DefaultListItem.MyViewHolder> implements Parcelable {
 
 
     MealType mealType;
 
-    public MealTypeFlexItem(MealType mealType){
+    Menu menu;
+
+    int listType;
+
+    public DefaultListItem(MealType mealType, int listType) {
         this.mealType = mealType;
+        this.listType = listType;
+    }
+
+    public DefaultListItem(Menu menu,  int listType) {
+        this.menu = menu;
+        this.listType = listType;
+
     }
 
     public MealType getMealType() {
         return mealType;
     }
 
+    public Menu getMenu() {
+        return menu;
+    }
+
+    public void setMenu(Menu menu) {
+        this.menu = menu;
+    }
+
     public void setMealType(MealType mealType) {
         this.mealType = mealType;
     }
+
     @Override
     public int getLayoutRes() {
         return R.layout.recycler_simple_item;
@@ -45,6 +66,7 @@ public class MealTypeFlexItem extends AbstractFlexibleItem<MealTypeFlexItem.MyVi
     public MyViewHolder createViewHolder(View view, FlexibleAdapter adapter) {
         return new MyViewHolder(view, adapter);
     }
+
     /**
      * When an item is equals to another?
      * Write your own concept of equals, mandatory to implement or use
@@ -58,18 +80,31 @@ public class MealTypeFlexItem extends AbstractFlexibleItem<MealTypeFlexItem.MyVi
             return this.mealType.getDescription().equals(inItem.getDescription());
         }
 
+        if (inObject instanceof Menu) {
+            MealType inItem = (MealType) inObject;
+            return this.menu.getDescription().equals(inItem.getDescription());
+        }
+
         return false;
     }
 
 
-
     @Override
     public void bindViewHolder(FlexibleAdapter adapter, MyViewHolder holder, int position, List<Object> payloads) {
-        holder.mTitle.setText(mealType.getDescription());
+
+        switch (listType) {
+            case 0:
+                holder.mTitle.setText(menu.getDescription());
+
+                break;
+            case 1:
+                holder.mTitle.setText(mealType.getDescription());
+
+                break;
+        }
         // Title appears disabled if item is disabled
         holder.mTitle.setEnabled(isEnabled());
     }
-
 
 
     /**
@@ -87,9 +122,10 @@ public class MealTypeFlexItem extends AbstractFlexibleItem<MealTypeFlexItem.MyVi
             mTitle = view.findViewById(R.id.title);
             this.mFlipView = view.findViewById(R.id.image);
             this.mFlipView.setOnClickListener(
-                    v ->{
-                            mAdapter.mItemLongClickListener.onItemLongClick(getAdapterPosition());
-                            toggleActivation();});
+                    v -> {
+                        mAdapter.mItemLongClickListener.onItemLongClick(getAdapterPosition());
+                        toggleActivation();
+                    });
         }
 
         @Override
@@ -98,6 +134,7 @@ public class MealTypeFlexItem extends AbstractFlexibleItem<MealTypeFlexItem.MyVi
             // Here we use a custom Animation inside the ItemView
             mFlipView.flip(mAdapter.isSelected(getAdapterPosition()));
         }
+
         @Override
         public float getActivationElevation() {
             return DisplayUtils.pxFromDp(itemView.getContext(), 4f);
@@ -105,4 +142,38 @@ public class MealTypeFlexItem extends AbstractFlexibleItem<MealTypeFlexItem.MyVi
 
 
     }
+
+
+    protected DefaultListItem(Parcel in) {
+        mealType = (MealType) in.readValue(MealType.class.getClassLoader());
+        menu = (Menu) in.readValue(Menu.class.getClassLoader());
+        listType = in.readInt();
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeValue(mealType);
+        dest.writeValue(menu);
+        dest.writeInt(listType);
+    }
+
+    @SuppressWarnings("unused")
+    public static final Parcelable.Creator<DefaultListItem> CREATOR = new Parcelable.Creator<DefaultListItem>() {
+        @Override
+        public DefaultListItem createFromParcel(Parcel in) {
+            return new DefaultListItem(in);
+        }
+
+        @Override
+        public DefaultListItem[] newArray(int size) {
+            return new DefaultListItem[size];
+        }
+    };
 }

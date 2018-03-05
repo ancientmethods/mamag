@@ -1,11 +1,9 @@
 package com.mamags.mamag.ui;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,13 +13,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.mamags.mamag.BaseFragment;
 import com.mamags.mamag.MyApplication;
 import com.mamags.mamag.R;
-import com.mamags.mamag.Utils.DisplayUtils;
-import com.mamags.mamag.adapters.MealTypeFlexItem;
+import com.mamags.mamag.adapters.DefaultListItem;
+import com.mamags.mamag.api.API_Requests;
 import com.mamags.mamag.api.ResponseCode;
 import com.mamags.mamag.constants.RequestAction;
 import com.mamags.mamag.databinding.MealtypeListfragmentBinding;
@@ -52,10 +49,10 @@ public class MealTypeListFragment extends BaseFragment<MealtypeListfragmentBindi
 
 
     FlexibleAdapter<IFlexible> adapter;
-    private ActionModeHelper mActionModeHelper;
 
     private CRUDViewModel crudViewModel;
     int mActivatedPosition;
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -96,26 +93,11 @@ public class MealTypeListFragment extends BaseFragment<MealtypeListfragmentBindi
 
 
     void loadData() {
-        MealTypeRequest request = new MealTypeRequest();
-        request.CrudOption = RequestAction.list.getValue();
 
-        viewModel.getMealTypeList(request);
+        viewModel.getMealTypeList(apiRequests.getMealTypes());
     }
 
-    private void initializeActionModeHelper(@SelectableAdapter.Mode int mode) {
-        //this = ActionMode.Callback instance
-        mActionModeHelper = new ActionModeHelper(adapter, R.menu.generic_edit, this) {
-            // Override to customize the title
-            @Override
-            public void updateContextTitle(int count) {
-                // You can use the internal mActionMode instance
-                if (mActionMode != null) {
-                    mActionMode.setTitle(ctx.getString(R.string.action_selected_one) + " " + count);
 
-                }
-            }
-        }.withDefaultMode(mode);
-    }
 
     boolean deleteDialog() {
         AlertDialog alertDialog = new AlertDialog.Builder(ctx).create();
@@ -130,22 +112,12 @@ public class MealTypeListFragment extends BaseFragment<MealtypeListfragmentBindi
     void deleteItems() {
         try {
             List<Integer> selectedItems = adapter.getSelectedPositions();
-            for (Integer num : selectedItems) {
-                Log.d(TAG, String.valueOf(num));
-            }
-
-            MealTypeFlexItem flexItem = (MealTypeFlexItem) adapter.getItem(selectedItems.get(0));
-            MealTypeRequest mealTypeRequest = new MealTypeRequest();
-            MealType mealType = new MealType();
-            mealType.setId(flexItem.getMealType().getId());
-
-            //initiate delete API call
-            mealTypeRequest.CrudOption = RequestAction.Delete.getValue();
-            mealTypeRequest.setMealType(mealType);
+            DefaultListItem flexItem = (DefaultListItem) adapter.getItem(selectedItems.get(0));
+            MealTypeRequest deleteMealTypeRequest = apiRequests.deleteMealType(flexItem.getMealType().getId());
 
 
-            crudViewModel.createMealTypeDisposable(mealTypeRequest);
-            mActionModeHelper.destroyActionModeIfCan();
+            crudViewModel.createMealTypeDisposable(deleteMealTypeRequest);
+            viewModel.getmActionModeHelper().destroyActionModeIfCan();
         } catch (Exception ex) {
             ex.printStackTrace();
             Log.d(TAG, "error");
@@ -180,27 +152,14 @@ public class MealTypeListFragment extends BaseFragment<MealtypeListfragmentBindi
 
         List<IFlexible> myItems = new ArrayList<>();
         for (MealType mealType : mealTypeListResponse.getMealTypeList()) {
-            MealTypeFlexItem mealTypeFlexItem = new MealTypeFlexItem(mealType);
+            DefaultListItem mealTypeFlexItem = new DefaultListItem(mealType,1);
             myItems.add(mealTypeFlexItem);
         }
         //Initialize the Adapter
-        adapter = new FlexibleAdapter<>(myItems);
+        adapter = viewModel.displayFlexibleAdapter(myItems,binding.list, this);
         adapter.addListener(this);
-        adapter.setMode(SelectableAdapter.Mode.SINGLE);
-        initializeActionModeHelper(SelectableAdapter.Mode.SINGLE);
-        binding.list.setLayoutManager(new SmoothScrollLinearLayoutManager(ctx));
-
-        binding.list.setAdapter(adapter);
-        binding.list.setItemAnimator(new DefaultItemAnimator());
-
-        // Divider item decorator with DrawOver enabled
-        binding.list.addItemDecoration(new FlexibleItemDecoration(getActivity())
-                .withDivider(R.drawable.divider, R.layout.recycler_simple_item)
-                .withDrawOver(true));
         showLoadedStatus();
         displayUtils.displaySuccessMessage(binding.getRoot());
-
-        //binding.list.setAdapter(new MealTypeAdapter(mealTypeListResponse.getMealTypeList()));
 
     }
 
@@ -247,7 +206,7 @@ public class MealTypeListFragment extends BaseFragment<MealtypeListfragmentBindi
 
         //make sure only the currently selected item will get selected again as we are in single selection mode
         if (adapter.getSelectedPositions().size() == 0 || adapter.getSelectedPositions().contains(position)) {
-            mActionModeHelper.onLongClick(ctx, position);
+            viewModel.getmActionModeHelper().onLongClick(ctx, position);
         }
 
 
@@ -256,7 +215,7 @@ public class MealTypeListFragment extends BaseFragment<MealtypeListfragmentBindi
     @Override
     public boolean onItemClick(int position) {
 
-        if (mActionModeHelper.getActionMode() != null) {
+        if (viewModel.getmActionModeHelper().getActionMode() != null) {
             return false;
         }
 

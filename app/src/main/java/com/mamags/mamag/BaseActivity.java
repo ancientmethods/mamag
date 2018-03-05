@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
 import com.mamags.mamag.Utils.DisplayUtils;
+import com.mamags.mamag.api.API_Requests;
 import com.mamags.mamag.api.ResponseCode;
 import com.mamags.mamag.api.RestAPI;
 import com.mamags.mamag.interfaces.IView;
@@ -32,6 +33,9 @@ public abstract class BaseActivity<B extends ViewDataBinding, T extends BaseView
     @Inject
     public DisplayUtils displayUtils;
 
+
+    @Inject
+    public API_Requests apiRequests;
     /**
      * ViewModel must be initialized before bindView() is called
      *

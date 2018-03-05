@@ -36,7 +36,7 @@ public interface RestAPI {
     Single<MenuListResponse> getMenusList(@Body FDSRequest fdsRequest);
 
     @POST("processMenuItem")
-    Single<FDSresponse> createMenu (@Body MenuRequest menuRequest);
+    Single<FDSresponse> processMenu(@Body MenuRequest menuRequest);
 
     @POST("getMealTypes")
     Single<MealTypeListResponse> getMealTypes(@Body MealTypeRequest mealTypeRequest);

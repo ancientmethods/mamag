@@ -1,5 +1,6 @@
 package com.mamags.mamag.di.module;
 
+import com.mamags.mamag.api.API_Requests;
 import com.mamags.mamag.api.RestAPI;
 
 import javax.inject.Singleton;
@@ -20,5 +21,15 @@ public class ApiModule {
     RestAPI provideRetrofit(Retrofit retrofit) {
         return retrofit.create(RestAPI.class);
     }
+
+
+    @Provides
+    @Singleton
+    API_Requests provideAPIRequest() {
+        return new API_Requests();
+    }
+
+
+
 
 }

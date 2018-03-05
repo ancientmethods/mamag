@@ -17,6 +17,10 @@
     <string name="delete">Delete</string>
     <string name="warning">Warning</string>
     <string name="delete_mealtype_warning">This will delete all meals associated</string>
+    <string name="delete_menu_warning">This will delete all meals associated</string>
+
     <string name="yes">Yes</string>
+    <string name="edit_menu">Edit Menu</string>
+    <string name="name_required">Name field is required</string>
 
 </resources>

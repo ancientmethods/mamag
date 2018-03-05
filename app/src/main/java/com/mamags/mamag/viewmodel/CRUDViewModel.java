@@ -34,7 +34,7 @@ public class CRUDViewModel extends BaseViewModel {
         if (createMenuDisposable != null) {
             createMenuDisposable.dispose();
         }
-        createMenuDisposable = restAPI.createMenu(menu)
+        createMenuDisposable = restAPI.processMenu(menu)
                 .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(fdSresponse -> Iview.processStandardResponse(fdSresponse,true),
