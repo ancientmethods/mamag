@@ -50,7 +50,7 @@
             fab:fab_labelsPosition="left"
 
 
-            android:id="@+id/new_mealType"
+            android:id="@+id/newrecord"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             fab:fab_colorNormal="@color/colorPrimaryDark"

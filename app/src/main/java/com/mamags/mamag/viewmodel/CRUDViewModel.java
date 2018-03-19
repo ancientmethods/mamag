@@ -4,6 +4,7 @@ import android.app.Application;
 
 import com.mamags.mamag.BaseViewModel;
 import com.mamags.mamag.api.RestAPI;
+import com.mamags.mamag.model.Requests.IngredientsRequest;
 import com.mamags.mamag.model.Requests.MealRequest;
 import com.mamags.mamag.model.Requests.MealTypeRequest;
 import com.mamags.mamag.model.Requests.MenuRequest;
@@ -22,6 +23,7 @@ public class CRUDViewModel extends BaseViewModel {
     Disposable createMenuDisposable;
     Disposable mealTypeDisposable;
     Disposable createMealDisposable;
+    Disposable ingredientDisposable;
 
 
     public CRUDViewModel(Application application, RestAPI restAPI) {
@@ -65,7 +67,21 @@ public class CRUDViewModel extends BaseViewModel {
         compositeDisposable.add(mealTypeDisposable);
     }
 
+    public void createIngredientDisposable(IngredientsRequest ingredientsRequest) {
 
+        if (ingredientDisposable != null) {
+            ingredientDisposable.dispose();
+        }
+        ingredientDisposable = restAPI.processIngredient(ingredientsRequest)
+                .subscribeOn(Schedulers.computation())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(fdSresponse -> Iview.processStandardResponse(fdSresponse,true),
+                        throwable -> Iview.error("Error processing request "))
+        ;
+
+
+        compositeDisposable.add(ingredientDisposable);
+    }
 
 
 

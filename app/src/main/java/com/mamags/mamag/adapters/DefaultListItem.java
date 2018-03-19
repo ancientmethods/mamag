@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import com.mamags.mamag.R;
 import com.mamags.mamag.Utils.DisplayUtils;
+import com.mamags.mamag.model.Ingredient;
 import com.mamags.mamag.model.MealType;
 import com.mamags.mamag.model.Menu;
 
@@ -28,6 +29,8 @@ public class DefaultListItem extends AbstractFlexibleItem<DefaultListItem.MyView
 
     Menu menu;
 
+    Ingredient ingredient;
+
     int listType;
 
     public DefaultListItem(MealType mealType, int listType) {
@@ -35,27 +38,17 @@ public class DefaultListItem extends AbstractFlexibleItem<DefaultListItem.MyView
         this.listType = listType;
     }
 
-    public DefaultListItem(Menu menu,  int listType) {
+    public DefaultListItem(Ingredient ingredient, int listType) {
+        this.ingredient = ingredient;
+        this.listType = listType;
+    }
+
+    public DefaultListItem(Menu menu, int listType) {
         this.menu = menu;
         this.listType = listType;
 
     }
 
-    public MealType getMealType() {
-        return mealType;
-    }
-
-    public Menu getMenu() {
-        return menu;
-    }
-
-    public void setMenu(Menu menu) {
-        this.menu = menu;
-    }
-
-    public void setMealType(MealType mealType) {
-        this.mealType = mealType;
-    }
 
     @Override
     public int getLayoutRes() {
@@ -85,6 +78,11 @@ public class DefaultListItem extends AbstractFlexibleItem<DefaultListItem.MyView
             return this.menu.getDescription().equals(inItem.getDescription());
         }
 
+
+        if (inObject instanceof Ingredient) {
+            MealType inItem = (MealType) inObject;
+            return this.ingredient.getDescription().equals(inItem.getDescription());
+        }
         return false;
     }
 
@@ -99,6 +97,9 @@ public class DefaultListItem extends AbstractFlexibleItem<DefaultListItem.MyView
                 break;
             case 1:
                 holder.mTitle.setText(mealType.getDescription());
+                break;
+            case 2:
+                holder.mTitle.setText(ingredient.getDescription());
 
                 break;
         }
@@ -146,7 +147,14 @@ public class DefaultListItem extends AbstractFlexibleItem<DefaultListItem.MyView
 
     protected DefaultListItem(Parcel in) {
         mealType = (MealType) in.readValue(MealType.class.getClassLoader());
+
+
+        ingredient = (Ingredient) in.readValue(Ingredient.class.getClassLoader());
+
+
         menu = (Menu) in.readValue(Menu.class.getClassLoader());
+
+
         listType = in.readInt();
     }
 
@@ -156,11 +164,12 @@ public class DefaultListItem extends AbstractFlexibleItem<DefaultListItem.MyView
     }
 
 
-
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeValue(mealType);
+        dest.writeValue(ingredient);
         dest.writeValue(menu);
+
         dest.writeInt(listType);
     }
 
@@ -176,4 +185,28 @@ public class DefaultListItem extends AbstractFlexibleItem<DefaultListItem.MyView
             return new DefaultListItem[size];
         }
     };
+
+    public MealType getMealType() {
+        return mealType;
+    }
+
+    public Ingredient getIngredient() {
+        return ingredient;
+    }
+
+    public void setIngredient(Ingredient ingredient) {
+        this.ingredient = ingredient;
+    }
+
+    public Menu getMenu() {
+        return menu;
+    }
+
+    public void setMenu(Menu menu) {
+        this.menu = menu;
+    }
+
+    public void setMealType(MealType mealType) {
+        this.mealType = mealType;
+    }
 }

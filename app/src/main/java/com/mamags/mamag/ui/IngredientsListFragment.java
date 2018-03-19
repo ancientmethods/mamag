@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.view.ActionMode;
-import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,33 +17,33 @@ import com.mamags.mamag.BaseFragment;
 import com.mamags.mamag.MyApplication;
 import com.mamags.mamag.R;
 import com.mamags.mamag.adapters.DefaultListItem;
-import com.mamags.mamag.api.API_Requests;
 import com.mamags.mamag.api.ResponseCode;
-import com.mamags.mamag.constants.RequestAction;
 import com.mamags.mamag.databinding.MealtypeListfragmentBinding;
+import com.mamags.mamag.interfaces.IngredientsView;
 import com.mamags.mamag.interfaces.MealTypeView;
+import com.mamags.mamag.model.Ingredient;
 import com.mamags.mamag.model.MealType;
+import com.mamags.mamag.model.Requests.IngredientsRequest;
 import com.mamags.mamag.model.Requests.MealTypeRequest;
 import com.mamags.mamag.model.Responses.FDSresponse;
+import com.mamags.mamag.model.Responses.IngredientsResponse;
 import com.mamags.mamag.model.Responses.MealTypeListResponse;
 import com.mamags.mamag.viewmodel.CRUDViewModel;
+import com.mamags.mamag.viewmodel.IngredientsViewModel;
 import com.mamags.mamag.viewmodel.MealTypeViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import eu.davidea.flexibleadapter.FlexibleAdapter;
-import eu.davidea.flexibleadapter.SelectableAdapter;
-import eu.davidea.flexibleadapter.common.FlexibleItemDecoration;
-import eu.davidea.flexibleadapter.common.SmoothScrollLinearLayoutManager;
-import eu.davidea.flexibleadapter.helpers.ActionModeHelper;
 import eu.davidea.flexibleadapter.items.IFlexible;
 
 /**
- * Created by samer on 11/11/2017.
+ * Created by samer on 19/03/2018.
  */
 
-public class MealTypeListFragment extends BaseFragment<MealtypeListfragmentBinding, MealTypeViewModel> implements MealTypeView, ActionMode.Callback,
+
+public class IngredientsListFragment extends BaseFragment<MealtypeListfragmentBinding, IngredientsViewModel> implements IngredientsView, ActionMode.Callback,
         FlexibleAdapter.OnItemClickListener, FlexibleAdapter.OnItemLongClickListener {
 
 
@@ -60,7 +59,7 @@ public class MealTypeListFragment extends BaseFragment<MealtypeListfragmentBindi
 
         MyApplication.getComponent().inject(this);
 
-        viewModel = new MealTypeViewModel(ctx.getApplication(), restAPI);
+        viewModel = new IngredientsViewModel(ctx.getApplication(), restAPI);
         viewModel.attach(this);
 
         crudViewModel = new CRUDViewModel(ctx.getApplication(), restAPI);
@@ -85,16 +84,21 @@ public class MealTypeListFragment extends BaseFragment<MealtypeListfragmentBindi
         //if this class did not infer type MainViewModel, we wouldn't be able to call the method below
         binding.setRecyclerViewVisibility(true);
         showLoadingStatus();
-        loadData();
 
-        binding.newrecord.setOnClickListener(v -> startActivity(new Intent(ctx, CreateMealTypeActivity.class)));
+
+        binding.newrecord.setOnClickListener(v -> startActivity(new Intent(ctx, CreateIngredientActivity.class)));
 
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        loadData();
+    }
 
     void loadData() {
 
-        viewModel.getMealTypeList(apiRequests.getMealTypes());
+        viewModel.getIngredientsList(apiRequests.getIngredients());
     }
 
 
@@ -147,21 +151,7 @@ public class MealTypeListFragment extends BaseFragment<MealtypeListfragmentBindi
         super.processStandardResponse(fdSresponse, shouldClose);
     }
 
-    @Override
-    public void loadMealTypeResults(MealTypeListResponse mealTypeListResponse) {
 
-        List<IFlexible> myItems = new ArrayList<>();
-        for (MealType mealType : mealTypeListResponse.getMealTypeList()) {
-            DefaultListItem mealTypeFlexItem = new DefaultListItem(mealType,1);
-            myItems.add(mealTypeFlexItem);
-        }
-        //Initialize the Adapter
-        adapter = viewModel.displayFlexibleAdapter(myItems,binding.list, this);
-        adapter.addListener(this);
-        showLoadedStatus();
-        displayUtils.displaySuccessMessage(binding.getRoot());
-
-    }
 
     @Override
     public void showNoDataView() {
@@ -222,20 +212,18 @@ public class MealTypeListFragment extends BaseFragment<MealtypeListfragmentBindi
         if (position != mActivatedPosition) setActivatedPosition(position);
 
 
+
         //go to edit screen activity
         try {
-            Intent intent = new Intent(ctx, CreateMealTypeActivity.class);
+            Intent intent = new Intent(ctx, CreateIngredientActivity.class);
             intent.putExtra("edit", true);
-            intent.putExtra("mealtype", (DefaultListItem) adapter.getItem(mActivatedPosition));
+            intent.putExtra("ingredient", (DefaultListItem) adapter.getItem(mActivatedPosition));
 
             startActivity(intent);
         }
         catch (Exception ex){
             ex.printStackTrace();
         }
-
-
-
         return true; //Important!
     }
 
@@ -243,4 +231,19 @@ public class MealTypeListFragment extends BaseFragment<MealtypeListfragmentBindi
         mActivatedPosition = position;
         //adapter.toggleSelection(position); //Important!
     }
+
+    @Override
+    public void loadIngredientsList(IngredientsResponse ingredientListResponse) {
+        List<IFlexible> myItems = new ArrayList<>();
+        for (Ingredient ingredient : ingredientListResponse.getIngredientList()) {
+            DefaultListItem ingredientFlexItem = new DefaultListItem(ingredient,2);
+            myItems.add(ingredientFlexItem);
+        }
+        //Initialize the Adapter
+        adapter = viewModel.displayFlexibleAdapter(myItems,binding.list, this);
+        adapter.addListener(this);
+        showLoadedStatus();
+        displayUtils.displaySuccessMessage(binding.getRoot());
+    }
 }
+

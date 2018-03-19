@@ -24,6 +24,8 @@
         <activity android:name=".ui.CreateMenuActivity" />
         <activity android:name=".ui.CreateMealTypeActivity" />
         <activity android:name=".ui.CreateMealActivity"></activity>
+        <activity android:name=".ui.CreateIngredientActivity"></activity>
+
     </application>
 
 </manifest>

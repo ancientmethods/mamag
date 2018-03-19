@@ -4,6 +4,7 @@ import com.mamags.mamag.constants.RequestAction;
 import com.mamags.mamag.model.FDSRequest;
 import com.mamags.mamag.model.MealType;
 import com.mamags.mamag.model.Menu;
+import com.mamags.mamag.model.Requests.IngredientsRequest;
 import com.mamags.mamag.model.Requests.MealRequest;
 import com.mamags.mamag.model.Requests.MealTypeRequest;
 import com.mamags.mamag.model.Requests.MenuRequest;
@@ -60,6 +61,14 @@ public class API_Requests {
         menuRequest.CrudOption = RequestAction.Delete.getValue();
         menuRequest.setMenu(menu);
         return  menuRequest;
+    }
+
+    /******************* Ingredients Screen ********************/
+    public IngredientsRequest getIngredients (){
+
+        IngredientsRequest request = new IngredientsRequest();
+        request.CrudOption = RequestAction.list.getValue();
+        return  request;
     }
 
 }

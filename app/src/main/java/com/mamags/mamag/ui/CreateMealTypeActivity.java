@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import com.mamags.mamag.BaseActivity;
 import com.mamags.mamag.MyApplication;
 import com.mamags.mamag.R;
+import com.mamags.mamag.adapters.DefaultListItem;
 import com.mamags.mamag.constants.RequestAction;
 import com.mamags.mamag.databinding.ActivityCreateMealtypeBinding;
 import com.mamags.mamag.model.MealType;
@@ -18,6 +19,8 @@ import com.mamags.mamag.viewmodel.CRUDViewModel;
 
 public class CreateMealTypeActivity extends BaseActivity<ActivityCreateMealtypeBinding,CRUDViewModel> {
 
+    boolean isEdit = false;
+    DefaultListItem defaultListItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,8 +31,23 @@ public class CreateMealTypeActivity extends BaseActivity<ActivityCreateMealtypeB
         viewModel = new CRUDViewModel(getApplication(),restAPI);
         viewModel.attach(this);
 
-        //setSupportActionBar(binding.toolbar);
-        binding.toolbar.setTitle("New Meal Type");
+
+
+        if (getIntent() != null && getIntent().getBooleanExtra("edit", false)) {
+            isEdit = true;
+            binding.toolbar.setTitle(R.string.edit_menu);
+            defaultListItem = getIntent().getParcelableExtra("mealtype");
+
+            if(defaultListItem!=null){
+                binding.mealtypeDescription.getEditText().setText(defaultListItem.getMenu().getDescription());
+
+            }    //setSupportActionBar(binding.toolbar);
+            binding.toolbar.setTitle("Edit Meal Type");
+        }
+        else{
+            binding.toolbar.setTitle("New Meal Type");
+        }
+
         binding.toolbar.inflateMenu(R.menu.generic_save);
         binding.toolbar.setOnMenuItemClickListener(menuitem-> validate());
 
@@ -50,6 +68,15 @@ public class CreateMealTypeActivity extends BaseActivity<ActivityCreateMealtypeB
             MealType mealType = new MealType();
             mealType.setDescription(binding.mealtypeDescription.getEditText().getText().toString().trim());
 
+            if (isEdit) {
+                mealTypeRequest.CrudOption = RequestAction.Update.getValue();
+                mealType.setId(defaultListItem.getMenu().getId());
+
+
+            } else {
+                mealTypeRequest.CrudOption = RequestAction.Add.getValue();
+
+            }
             mealTypeRequest.CrudOption = RequestAction.Add.getValue();
             mealTypeRequest.setMealType(mealType);
 

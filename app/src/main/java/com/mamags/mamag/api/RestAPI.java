@@ -1,11 +1,13 @@
 package com.mamags.mamag.api;
 
 import com.mamags.mamag.model.FDSRequest;
+import com.mamags.mamag.model.Requests.IngredientsRequest;
 import com.mamags.mamag.model.Requests.MealRequest;
 import com.mamags.mamag.model.Requests.MealTypeRequest;
 import com.mamags.mamag.model.Requests.MenuRequest;
 import com.mamags.mamag.model.Responses.FDSresponse;
 import com.mamags.mamag.model.Menu;
+import com.mamags.mamag.model.Responses.IngredientsResponse;
 import com.mamags.mamag.model.Responses.MealTypeListResponse;
 import com.mamags.mamag.model.Responses.MenuListResponse;
 
@@ -47,6 +49,12 @@ public interface RestAPI {
 
     @POST("processMealInfo")
     Single<FDSresponse> createMeal(@Body MealRequest mealTypeRequest);
+
+    @POST("getIngredients")
+    Single<IngredientsResponse> getIngredients(@Body IngredientsRequest ingredientsRequest);
+
+    @POST("processIngredient")
+    Single<IngredientsResponse> processIngredient(@Body IngredientsRequest ingredientsRequest);
     //
     // to use with tokens later guildwars
    /* @GET("account/finishers")

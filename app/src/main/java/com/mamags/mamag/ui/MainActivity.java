@@ -135,6 +135,12 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MenuViewMode
 
         }
 
+        else if (name.equals(TT_Tabs.getInstance().getIngredients())) {
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.replace(R.id.content, new IngredientsListFragment()).commit();
+
+        }
+
     }
 
     /**
