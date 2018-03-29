@@ -40,7 +40,10 @@ public class NetworkModule {
     @Provides
     @Singleton
     OkHttpClient provideOkHttpClient() {
-        return new OkHttpClient.Builder().readTimeout(15, TimeUnit.SECONDS).build();
+        return new OkHttpClient.Builder().
+                readTimeout(15, TimeUnit.SECONDS)
+                .connectTimeout(15,TimeUnit.SECONDS)
+                .build();
     }
 
     @Provides

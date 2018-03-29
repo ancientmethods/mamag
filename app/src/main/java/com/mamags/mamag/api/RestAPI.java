@@ -14,6 +14,7 @@ import com.mamags.mamag.model.Responses.MenuListResponse;
 import java.util.List;
 
 import io.reactivex.Flowable;
+import io.reactivex.Observable;
 import io.reactivex.Single;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.observers.DisposableSingleObserver;
@@ -35,7 +36,7 @@ public interface RestAPI {
 
 
     @POST("getMenuItems")
-    Single<MenuListResponse> getMenusList(@Body FDSRequest fdsRequest);
+    Observable<MenuListResponse> getMenusList(@Body FDSRequest fdsRequest);
 
     @POST("processMenuItem")
     Single<FDSresponse> processMenu(@Body MenuRequest menuRequest);
